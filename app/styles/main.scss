@@ -1,0 +1,27 @@
+$icon-font-path: "/bower_components/sass-bootstrap/fonts/";
+
+@import 'sass-bootstrap/lib/bootstrap';
+
+body {
+  margin-top: 20px;
+}
+
+.container {
+  padding-right: 15px;
+  padding-left: 15px;
+}
+
+.left-inner-addon {
+  position: relative;
+  margin-top: 5px;
+
+  input {
+    padding-left: 30px;
+  }
+
+  i {
+    position: absolute;
+    padding: 8px 12px;
+    pointer-events: none;
+  }
+}

@@ -1,0 +1,14 @@
+<div class="autocomplete {{attrs.class}}" id="{{attrs.id}}">
+  <div class=right-inner-addon>
+    <i class="glyphicon glyphicon-search"></i>
+    <input class="form-control" type="search" ng-model="searchParam" placeholder="{{attrs.placeholder}}" class="{{attrs.inputclass}}" id="{{attrs.inputid}}"/>
+  </div>
+  <ul ng-show="completing">
+    <li suggestion ng-repeat="suggestion in suggestions" index="{{$index}}" val="{{suggestion}}" 
+      ng-class="{active: ($index == selectedIndex)}" ng-click="select(suggestion)" 
+      ng-bind-html="suggestion | highlight:searchParam">
+        {{suggestion}}
+    </li>
+  </ul>
+</div>
+

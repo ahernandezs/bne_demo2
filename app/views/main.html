@@ -1,0 +1,261 @@
+
+<ul class="nav nav-pills">
+  <li><a href="">Consultas</a></li>
+  <li class="active"><a href="">Pagos</a></li>
+  <li><a href="">Impuestos</a></li>
+  <li><a href="">Cobranza</a></li>
+  <li><a href="">Inversiones</a></li>
+</ul>
+
+<hr/>
+
+<form class="form-horizontal" role="form">
+  <div class="form-group">
+    <label for="origin-search" class="col-sm-3 control-label">Cuenta origen:</label>
+    <div class="col-sm-4">
+      <autocomplete ng-model="account" click-activation="true" data="personalAccounts" on-type="updateAccounts" attr-placeholder="Cuenta origen" template-url="account_template"></autocomplete>
+    </div>
+  </div>
+</form>
+
+<hr/>
+
+Pagar: &nbsp; <a href="">Servicios</a> &nbsp; <a href="">Tarjetas</a> &nbsp; <a href="">Traspasos</a>
+
+<hr/>
+
+<div class="row">
+  <div class="col-md-3 sidebar">
+    <button class="btn btn-default" type="submit">
+      <span class="glyphicon glyphicon-plus"></span>
+      Agregar
+    </button>
+
+    <target-autocomplete ng-model="otherAccount" click-activation="true" data="otherAccounts" on-type="updateOtherAccounts" attr-placeholder="Otras cuentas" template-url="taccount_template"></target-autocomplete>
+
+  </div>
+
+  <div class="col-md-9 main">
+    <div class="row">
+      <div class="col-md-6">
+
+        <h4 class="pull-left">Pendientes</h4>
+        <span class="badge pull-right">
+          2
+        </span>
+
+        <table class="table">
+          <tr>
+            <td>
+              Juanito Perez
+              cuenta destino
+            </td>
+            <td>
+              $1,500.00
+              12/12/2014
+            </td>
+          </tr>
+          <tr>
+            <td>
+              Juanito Perez
+              cuenta destino
+            </td>
+            <td>
+              $1,500.00
+              12/12/2014
+            </td>
+          </tr>
+        </table>
+
+      </div>
+
+      <div class="col-md-6">
+
+        <h4 class="pull-left">Rechazados</h4>
+        <span class="badge pull-right">
+          1
+        </span>
+
+        <table class="table">
+          <tr>
+            <td>
+              Teresa
+              Bancomer MXN 12345
+            </td>
+            <td>
+              $1,500.00
+              12/12/2014
+            </td>
+          </tr>
+        </table>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-md-12">
+
+        <h4 class="pull-left">Recurrentes</h4>
+
+        <button class="btn btn-default pull-right" type="submit">
+          <span class="glyphicon glyphicon-refresh"></span>
+          Reutilizar pagos
+        </button>
+
+
+        <table class="table">
+          <tr>
+            <td>
+              Juanito Perez
+            </td>
+            <td>
+              Cuenta destino
+            </td>
+            <td>
+              $1,500.00
+            </td>
+            <td>
+              12/12/2014
+            </td>
+            <td>
+              Pendiente por autorizar
+            </td>
+          </tr>
+          <tr>
+            <td>
+              Juanito Perez
+            </td>
+            <td>
+              Cuenta destino
+            </td>
+            <td>
+              $1,500.00
+            </td>
+            <td>
+              12/12/2014
+            </td>
+            <td>
+              Pendiente por autorizar
+            </td>
+          </tr>
+          <tr>
+            <td>
+              Juanito Perez
+            </td>
+            <td>
+              Cuenta destino
+            </td>
+            <td>
+              $1,500.00
+            </td>
+            <td>
+              12/12/2014
+            </td>
+            <td>
+              Falta segunda firma
+            </td>
+          </tr>
+          <tr>
+            <td>
+              Juanito Perez
+            </td>
+            <td>
+              Cuenta destino
+            </td>
+            <td>
+              $1,500.00
+            </td>
+            <td>
+              12/12/2014
+            </td>
+            <td>
+              Pendiente por autorizar
+            </td>
+          </tr>
+
+        </table>
+
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-md-12">
+        <h4 class="pull-left">Historial de pagos</h4>
+
+        <table class="table">
+          <tr>
+            <td>
+              Juanito Perez
+            </td>
+            <td>
+              Cuenta destino
+            </td>
+            <td>
+              $1,500.00
+            </td>
+            <td>
+              12/12/2014
+            </td>
+            <td>
+              Pendiente por autorizar
+            </td>
+          </tr>
+          <tr>
+            <td>
+              Juanito Perez
+            </td>
+            <td>
+              Cuenta destino
+            </td>
+            <td>
+              $1,500.00
+            </td>
+            <td>
+              12/12/2014
+            </td>
+            <td>
+              Pendiente por autorizar
+            </td>
+          </tr>
+          <tr>
+            <td>
+              Juanito Perez
+            </td>
+            <td>
+              Cuenta destino
+            </td>
+            <td>
+              $1,500.00
+            </td>
+            <td>
+              12/12/2014
+            </td>
+            <td>
+              Falta segunda firma
+            </td>
+          </tr>
+          <tr>
+            <td>
+              Juanito Perez
+            </td>
+            <td>
+              Cuenta destino
+            </td>
+            <td>
+              $1,500.00
+            </td>
+            <td>
+              12/12/2014
+            </td>
+            <td>
+              Pendiente por autorizar
+            </td>
+          </tr>
+
+        </table>
+
+
+      </div>
+    </div>
+  </div>
+</div>
+
