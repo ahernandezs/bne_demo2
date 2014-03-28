@@ -13,7 +13,16 @@
   <div class="form-group">
     <label for="origin-search" class="col-sm-3 control-label">Cuenta origen:</label>
     <div class="col-sm-4">
-      <autocomplete ng-model="account" click-activation="true" data="personalAccounts" on-type="updateAccounts" attr-placeholder="Cuenta origen" template-url="account_template"></autocomplete>
+      <angucomplete id="origin-account"
+              placeholder="Cuenta origen"
+              pause="20"
+              selectedobject="originAccount"
+              url="http://localhost:4567/api/accounts?query="
+              datafield="docs"
+              titlefield="name"
+              minlength="1"
+              enabledefault="true"
+              inputclass="form-control form-control-small"/>
     </div>
   </div>
 </form>
@@ -31,7 +40,31 @@ Pagar: &nbsp; <a href="">Servicios</a> &nbsp; <a href="">Tarjetas</a> &nbsp; <a 
       Agregar
     </button>
 
-    <target-autocomplete ng-model="otherAccount" click-activation="true" data="otherAccounts" on-type="updateOtherAccounts" attr-placeholder="Otras cuentas" template-url="taccount_template"></target-autocomplete>
+      <angucomplete id="target-account"
+              placeholder="Cuenta propias"
+              pause="20"
+              selectedobject="targetAccount"
+              url="http://localhost:4567/api/accounts?query="
+              datafield="docs"
+              titlefield="name"
+              minlength="1"
+              enabledefault="true"
+              unhidedropdown="true"
+              inputclass="form-control form-control-small"/>
+
+
+      <angucomplete id="target-thirdaccount"
+              placeholder="Cuenta de terceros"
+              pause="20"
+              selectedobject="thirdAccount"
+              url="http://localhost:4567/api/otheraccounts?query="
+              datafield="docs"
+              titlefield="name"
+              descriptionfield="bank_t"
+              minlength="1"
+              enabledefault="true"
+              unhidedropdown="true"
+              inputclass="form-control form-control-small"/>
 
   </div>
 

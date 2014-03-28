@@ -5,8 +5,7 @@ angular.module('bnePaymentsFrontApp', [
   'ngResource',
   'ngSanitize',
   'ngRoute',
-  'autocomplete',
-  'targetAutocomplete'
+  'angucomplete'
 ])
   .config(function ($routeProvider) {
     $routeProvider

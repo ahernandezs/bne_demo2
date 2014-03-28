@@ -3,7 +3,7 @@
 angular.module('bnePaymentsFrontApp')
   .controller('MainCtrl', function ($scope, $http) {
 
-    $scope.account = "";
+/*    $scope.account = "";
 
     $scope.updateAccounts = function(typed) {
       $http({method: 'GET', url: 'http://localhost:4567/api/accounts?query=' + typed}).
@@ -40,5 +40,6 @@ angular.module('bnePaymentsFrontApp')
       });
 
     }
+   */
 
   });
