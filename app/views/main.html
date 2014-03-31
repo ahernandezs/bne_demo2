@@ -66,7 +66,7 @@ Pagar: &nbsp; <a href="">Servicios</a> &nbsp; <a href="">Tarjetas</a> &nbsp; <a 
 
   </div>
 
-  <div class="col-md-9 main" ng-show="payingAccounts.length < 1">
+  <div class="col-md-9 main" ng-show="dashboard">
     <div class="row">
       <div class="col-md-6">
 
@@ -426,7 +426,7 @@ Pagar: &nbsp; <a href="">Servicios</a> &nbsp; <a href="">Tarjetas</a> &nbsp; <a 
       </div>
     </div>
 
-    <button ng-click="paymentApplied=false; payingAccounts = []" type="submit" class="btn btn-default pull-right">Ir a principal</button>
+    <button ng-click="paymentApplied=false; dashboard=true" type="submit" class="btn btn-default pull-right">Ir a principal</button>
   </div>
 
 </div>

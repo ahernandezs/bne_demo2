@@ -3,13 +3,19 @@
 angular.module('bnePaymentsFrontApp')
   .controller('MainCtrl', function ($scope, $http) {
 
+    $scope.dashboard = true;
     $scope.payingAccounts = [];
+
 
     $scope.$watch('targetAccount', function() {
       if($scope.targetAccount) {
         if($scope.getPayingAccountIndex($scope.targetAccount.originalObject.id) === -1) {
           $scope.payingAccounts.push($scope.targetAccount.originalObject);
+          $scope.dashboard = false;
           $scope.paymentConfirmation = true;
+          $scope.paymentApplied = false;
+          $scope.challenge = false;
+          $scope.targetAccount = null;
         } else {
           console.log("Error, account already added");
         }
@@ -21,7 +27,11 @@ angular.module('bnePaymentsFrontApp')
       if($scope.thirdAccount) {
         if($scope.getPayingAccountIndex($scope.thirdAccount.originalObject.id) === -1) {
           $scope.payingAccounts.push($scope.thirdAccount.originalObject);
+          $scope.dashboard = false;
           $scope.paymentConfirmation = true;
+          $scope.paymentApplied = false;
+          $scope.challenge = false;
+          $scope.thirdAccount = null;
         } else {
           console.log("Error, account already added");
         }
@@ -52,6 +62,7 @@ angular.module('bnePaymentsFrontApp')
     };
 
     $scope.processPayment = function() {
+      $scope.dashboard = false;
       $scope.paymentConfirmation = false;
       $scope.paymentApplied = true;
 
@@ -71,5 +82,6 @@ angular.module('bnePaymentsFrontApp')
         return v.rejected;
       });
 
+      $scope.payingAccounts = [];
     };
   });
