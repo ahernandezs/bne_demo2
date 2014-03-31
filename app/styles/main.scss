@@ -25,3 +25,27 @@ body {
     pointer-events: none;
   }
 }
+
+.payment-account {
+  border: 1px solid #000000;
+  padding: 15px 0 15px 0;
+  margin: 10px 0 10px 0;
+
+}
+
+.applied {
+  background-color: #71B633;
+}
+
+.pending {
+  background-color: #E37723;
+}
+
+.rejected {
+  background-color: #FCD624;
+}
+
+.yellow-message {
+  background-color: #FFECCC;
+  padding: 20px;
+}

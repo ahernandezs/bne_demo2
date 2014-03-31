@@ -54,7 +54,6 @@ angular.module('angucomplete', [] )
                 if(!$scope.defaultData) {
                   $http.get($scope.url, {}).
                     success(function(responseData, status, headers, config) {
-                    console.log(responseData);
                     $scope.processResults(responseData[$scope.dataField], "");
                     $scope.defaultData = $scope.results
                   }).
@@ -204,7 +203,6 @@ angular.module('angucomplete', [] )
                   $scope.results = [];
                 }
                 $scope.selectedObject = result;
-                console.log($scope.selectedObject);
                 //$scope.$apply();
             }
 
