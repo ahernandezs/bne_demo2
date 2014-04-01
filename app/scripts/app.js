@@ -7,7 +7,7 @@ angular.module('bnePaymentsFrontApp', [
   'ngRoute',
   'angucomplete'
 ])
-  .config(function ($routeProvider) {
+  .config(['$routeProvider', function ($routeProvider) {
     $routeProvider
       .when('/', {
         templateUrl: 'views/main.html',
@@ -16,4 +16,4 @@ angular.module('bnePaymentsFrontApp', [
       .otherwise({
         redirectTo: '/'
       });
-  });
+  }]);

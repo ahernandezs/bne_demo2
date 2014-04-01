@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('bnePaymentsFrontApp')
-  .controller('MainCtrl', function ($scope, $http) {
+  .controller('MainCtrl', ['$scope', '$http', function ($scope, $http) {
 
     $scope.accountSelection = true;
     $scope.dashboard = true;
@@ -128,4 +128,4 @@ angular.module('bnePaymentsFrontApp')
 
       console.log($scope.benef);
     };
-  });
+  }]);
