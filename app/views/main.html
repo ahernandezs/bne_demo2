@@ -34,10 +34,10 @@ Pagar: &nbsp; <a href="">Servicios</a> &nbsp; <a href="">Tarjetas</a> &nbsp; <a 
 <hr/>
 
 <div class="row">
-  <div class="col-md-3 sidebar">
-    <button class="btn btn-default" type="submit">
+  <div class="col-md-3 sidebar" ng-show="accountSelection">
+    Agregar beneficiario
+    <button class="btn btn-default pull-right" type="submit" ng-click="addingBeneficiary=true; accountSelection=false; benef = {}">
       <span class="glyphicon glyphicon-plus"></span>
-      Agregar
     </button>
 
       <angucomplete id="target-account"
@@ -65,6 +65,179 @@ Pagar: &nbsp; <a href="">Servicios</a> &nbsp; <a href="">Tarjetas</a> &nbsp; <a 
               inputclass="form-control form-control-small"/>
 
   </div>
+
+  <div class="col-md-3 sidebar" ng-show="addingBeneficiary">
+    <div class="benef-header">
+      Agregar beneficiario
+      <span class="glyphicon glyphicon-remove pull-right" ng-click="addingBeneficiary=false; accountSelection=true;"></span>
+    </div>
+
+    <div class="yellow-message" ng-show="challengeBeneficiary">
+      <p>Ingresa manualmente tu clave dinámica</p>
+      <div class="row">
+        <div class="col-md-12">
+          <div class="input-group">
+            <span class="input-group-addon">23456789</span>
+            <input type="password" class="form-control" ng-model="inputChallngBenef"/>
+          </div>
+        </div>
+      </div>
+      <br />
+      <div class="row">
+        <div class="col-md-12">
+          <button ng-click="addBeneficiary()" type="button" class="btn btn-info pull-right">Confirmar</button>
+        </div>
+      </div>
+    </div>
+
+    <form role="form">
+      <div class="checkbox pull-right">
+        <label>
+          <input type="checkbox" ng-model="paymentOrder" ng-model="benef.paymentOrder"> Orden de pago
+        </label>
+      </div>
+
+      <div class="form-group">
+        <input type="text" class="form-control" placeholder="Nombre / Alias" ng-model="benef.name"/>
+      </div>
+
+      <div class="form-group">
+        <input type="email" class="form-control" placeholder="Correo electrónico" ng-model="benef.email"/>
+      </div>
+
+      <div ng-show="!paymentOrder">
+        <div class="form-group">
+          <input type="text" class="form-control" placeholder="Clabe | Tarjeta | Celular" ng-model="benef.account_s"/>
+        </div>
+      </div>
+
+      <div ng-show="paymentOrder">
+        <div class="form-group">
+          <input type="text" class="form-control" placeholder="Sector económico" ng-model="benef.sector"/>
+        </div>
+        <div class="form-group">
+          <div class="row">
+            <div class="col-md-6">
+              <div class="checkbox">
+                <label>
+                  <input type="radio" name="personType" ng-model="benef.personType" value="person"> Física
+                </label>
+              </div>
+            </div>
+
+            <div class="col-md-6">
+              <div class="checkbox">
+                <label>
+                  <input type="radio" name="personType" ng-model="benef.personType" value="company"> Moral
+                </label>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      <div class="form-group">
+        <input type="text" class="form-control" placeholder="Importe máximo" ng-model="benef.max_amount"/>
+      </div>
+
+      <div class="form-group">
+        <input type="text" class="form-control" placeholder="Teléfono celular" ng-model="benef.cellphone"/>
+      </div>
+
+      <div class="checkbox">
+        <label>
+          <input type="checkbox" ng-model="benef.recurring"> Pago recurrente
+        </label>
+      </div>
+
+      <div class="checkbox">
+        <label>
+          <input type="checkbox" ng-model="benef.remote"> Autorizar en forma remota
+        </label>
+      </div>
+
+      <button ng-click="inputChallngBenef = ''; challengeBeneficiary = true" type="submit" class="btn btn-primary btn-block">Agregar</button>
+    </form>
+  </div>
+
+
+  <div class="col-md-3 sidebar" ng-show="addedBeneficiary">
+    <div class="benef-header">
+      Beneficiario dado de alta
+      <span class="glyphicon glyphicon-remove pull-right" ng-click="addedBeneficiary=false; accountSelection=true;"></span>
+    </div>
+
+    <div class="benef-added">
+      <div class="row">
+        <div class="col-md-12">
+          Nombre: {{benef.name}}
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-md-12">
+          Alias: {{benef.alias}}
+        </div>
+      </div>
+
+      <div ng-show="benef.sector">
+        <div class="row">
+          <div class="col-md-12">
+            Cuenta: {{benef.account_s}}
+          </div>
+        </div>
+      </div>
+
+      <div ng-show="benef.sector">
+        <div class="row">
+          <div class="col-md-12">
+            Sector: {{benef.sector}}
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-md-12">
+            <span ng-show="benef.personType == 'person'">Física</span>
+            <span ng-show="benef.personType == 'company'">Moral</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-md-12">
+          Importe máximo: {{benef.max_amount}}
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-md-12">
+          Correo electrónico: {{benef.email}}
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-md-12">
+          Teléfono celular: {{benef.cellphone}}
+        </div>
+      </div>
+
+      <div class="row" ng-show="benef.recurring">
+        <div class="col-md-12">
+          Pago recurrente
+        </div>
+      </div>
+
+      <div class="row" ng-show="benef.remote">
+        <div class="col-md-12">
+          Autorizar en forma remota
+        </div>
+      </div>
+
+    </div>
+
+  </div>
+
 
   <div class="col-md-9 main" ng-show="dashboard">
     <div class="row">
@@ -297,7 +470,7 @@ Pagar: &nbsp; <a href="">Servicios</a> &nbsp; <a href="">Tarjetas</a> &nbsp; <a 
         <div class="col-md-4">
           <div class="input-group">
             <span class="input-group-addon">23456789</span>
-            <input type="password" class="form-control"/>
+            <input type="password" class="form-control" ng-model="inputChallngPayment"/>
           </div>
         </div>
         <div class="col-md-4">
@@ -339,7 +512,7 @@ Pagar: &nbsp; <a href="">Servicios</a> &nbsp; <a href="">Tarjetas</a> &nbsp; <a 
 
       </div>
 
-      <button ng-click="challenge=true" type="submit" class="btn btn-primary pull-right">Pagar</button>
+      <button ng-click="inputChallngPayment = ''; challenge=true" type="submit" class="btn btn-primary pull-right">Pagar</button>
 
     </form>
   </div>

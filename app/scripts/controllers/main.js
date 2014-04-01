@@ -3,7 +3,10 @@
 angular.module('bnePaymentsFrontApp')
   .controller('MainCtrl', function ($scope, $http) {
 
+    $scope.accountSelection = true;
     $scope.dashboard = true;
+    $scope.addingBeneficiary = false;
+    $scope.challengeBeneficiary = false;
     $scope.payingAccounts = [];
 
 
@@ -83,5 +86,13 @@ angular.module('bnePaymentsFrontApp')
       });
 
       $scope.payingAccounts = [];
+    };
+
+    $scope.addBeneficiary = function() {
+      $scope.addedBeneficiary = true;
+      $scope.addingBeneficiary = false;
+      $scope.challengeBeneficiary = false;
+
+      console.log($scope.benef);
     };
   });
