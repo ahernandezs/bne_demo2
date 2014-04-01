@@ -9,6 +9,20 @@ angular.module('bnePaymentsFrontApp')
     $scope.challengeBeneficiary = false;
     $scope.payingAccounts = [];
 
+    $scope.getDashboardData = function() {
+      $http.get('http://localhost:4567/api/transactions').success(function(data, status, headers, config) {
+        $scope.pending = data.pending;
+        $scope.rejected = data.rejected;
+        $scope.recurring = data.recurring;
+        $scope.applied = data.applied;
+      }).
+        error(function(data, status, headers, config) {
+          console.log("Error getting transactions");
+        });
+    };
+
+    $scope.getDashboardData();
+
     $scope.updateRanking = function(id, target) {
       $http.post('http://localhost:4567/api/updateranking', {id: id, target: target}).success(function(data, status, headers, config) {
         console.log("Ranking updated");

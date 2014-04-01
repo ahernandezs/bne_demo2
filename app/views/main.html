@@ -145,18 +145,6 @@ Pagar: &nbsp; <a href="">Servicios</a> &nbsp; <a href="">Tarjetas</a> &nbsp; <a 
         <input type="text" class="form-control" placeholder="Teléfono celular" ng-model="benef.cellphone"/>
       </div>
 
-      <div class="checkbox">
-        <label>
-          <input type="checkbox" ng-model="benef.recurring"> Pago recurrente
-        </label>
-      </div>
-
-      <div class="checkbox">
-        <label>
-          <input type="checkbox" ng-model="benef.remote"> Autorizar en forma remota
-        </label>
-      </div>
-
       <button ng-click="inputChallngBenef = ''; challengeBeneficiary = true" type="submit" class="btn btn-primary btn-block">Agregar</button>
     </form>
   </div>
@@ -222,18 +210,6 @@ Pagar: &nbsp; <a href="">Servicios</a> &nbsp; <a href="">Tarjetas</a> &nbsp; <a 
         </div>
       </div>
 
-      <div class="row" ng-show="benef.recurring">
-        <div class="col-md-12">
-          Pago recurrente
-        </div>
-      </div>
-
-      <div class="row" ng-show="benef.remote">
-        <div class="col-md-12">
-          Autorizar en forma remota
-        </div>
-      </div>
-
     </div>
 
   </div>
@@ -245,28 +221,18 @@ Pagar: &nbsp; <a href="">Servicios</a> &nbsp; <a href="">Tarjetas</a> &nbsp; <a 
 
         <h4 class="pull-left">Pendientes</h4>
         <span class="badge pull-right">
-          2
+          {{pending.length}}
         </span>
 
         <table class="table">
-          <tr>
+          <tr ng-repeat="txn in pending">
             <td>
-              Juanito Perez
-              cuenta destino
+              {{txn.target_name_t}}
+              {{txn.target_bank_t}}
             </td>
             <td>
-              $1,500.00
-              12/12/2014
-            </td>
-          </tr>
-          <tr>
-            <td>
-              Juanito Perez
-              cuenta destino
-            </td>
-            <td>
-              $1,500.00
-              12/12/2014
+              {{txn.amount_d | currency}}
+              {{txn.date_dt | date:'dd/MM/yyyy'}}
             </td>
           </tr>
         </table>
@@ -277,18 +243,18 @@ Pagar: &nbsp; <a href="">Servicios</a> &nbsp; <a href="">Tarjetas</a> &nbsp; <a 
 
         <h4 class="pull-left">Rechazados</h4>
         <span class="badge pull-right">
-          1
+          {{rejected.length}}
         </span>
 
         <table class="table">
-          <tr>
+          <tr ng-repeat="txn in rejected">
             <td>
-              Teresa
-              Bancomer MXN 12345
+              {{txn.target_name_t}}
+              {{txn.target_bank_t}} {{txn.target_account_t}}
             </td>
             <td>
-              $1,500.00
-              12/12/2014
+              {{txn.amount_d | currency}}
+              {{txn.date_dt | date:'dd/MM/yyyy'}}
             </td>
           </tr>
         </table>
@@ -307,75 +273,24 @@ Pagar: &nbsp; <a href="">Servicios</a> &nbsp; <a href="">Tarjetas</a> &nbsp; <a 
 
 
         <table class="table">
-          <tr>
+          <tr ng-repeat="txn in recurring">
             <td>
-              Juanito Perez
+              {{txn.target_name_t}}
             </td>
             <td>
-              Cuenta destino
+              {{txn.target_bank_t}} {{txn.target_account_t}}
             </td>
             <td>
-              $1,500.00
+              {{txn.amount_d | currency}}
             </td>
             <td>
-              12/12/2014
+              {{txn.date_dt | date:'dd/MM/yyyy h:mma'}}
             </td>
             <td>
-              Pendiente por autorizar
-            </td>
-          </tr>
-          <tr>
-            <td>
-              Juanito Perez
-            </td>
-            <td>
-              Cuenta destino
-            </td>
-            <td>
-              $1,500.00
-            </td>
-            <td>
-              12/12/2014
-            </td>
-            <td>
-              Pendiente por autorizar
+              <span ng-show="txn.pending_b">Pendiente por autorizar</span>
+              <span ng-show="txn.applied_b">Aplicada</span>
             </td>
           </tr>
-          <tr>
-            <td>
-              Juanito Perez
-            </td>
-            <td>
-              Cuenta destino
-            </td>
-            <td>
-              $1,500.00
-            </td>
-            <td>
-              12/12/2014
-            </td>
-            <td>
-              Falta segunda firma
-            </td>
-          </tr>
-          <tr>
-            <td>
-              Juanito Perez
-            </td>
-            <td>
-              Cuenta destino
-            </td>
-            <td>
-              $1,500.00
-            </td>
-            <td>
-              12/12/2014
-            </td>
-            <td>
-              Pendiente por autorizar
-            </td>
-          </tr>
-
         </table>
 
       </div>
@@ -386,77 +301,25 @@ Pagar: &nbsp; <a href="">Servicios</a> &nbsp; <a href="">Tarjetas</a> &nbsp; <a 
         <h4 class="pull-left">Historial de pagos</h4>
 
         <table class="table">
-          <tr>
+          <tr ng-repeat="txn in applied">
             <td>
-              Juanito Perez
+              {{txn.target_name_t}}
             </td>
             <td>
-              Cuenta destino
+              {{txn.target_bank_t}} {{txn.target_account_t}}
             </td>
             <td>
-              $1,500.00
+              {{txn.amount_d | currency}}
             </td>
             <td>
-              12/12/2014
+              {{txn.date_dt | date:'dd/MM/yyyy h:mma'}}
             </td>
             <td>
-              Pendiente por autorizar
-            </td>
-          </tr>
-          <tr>
-            <td>
-              Juanito Perez
-            </td>
-            <td>
-              Cuenta destino
-            </td>
-            <td>
-              $1,500.00
-            </td>
-            <td>
-              12/12/2014
-            </td>
-            <td>
-              Pendiente por autorizar
+              <span ng-show="txn.pending_b">Pendiente por autorizar</span>
+              <span ng-show="txn.applied_b">Aplicada</span>
             </td>
           </tr>
-          <tr>
-            <td>
-              Juanito Perez
-            </td>
-            <td>
-              Cuenta destino
-            </td>
-            <td>
-              $1,500.00
-            </td>
-            <td>
-              12/12/2014
-            </td>
-            <td>
-              Falta segunda firma
-            </td>
-          </tr>
-          <tr>
-            <td>
-              Juanito Perez
-            </td>
-            <td>
-              Cuenta destino
-            </td>
-            <td>
-              $1,500.00
-            </td>
-            <td>
-              12/12/2014
-            </td>
-            <td>
-              Pendiente por autorizar
-            </td>
-          </tr>
-
         </table>
-
 
       </div>
     </div>
@@ -487,26 +350,37 @@ Pagar: &nbsp; <a href="">Servicios</a> &nbsp; <a href="">Tarjetas</a> &nbsp; <a 
           <h4>{{payingAccount.name}}</h4>
         </div>
 
-        <div class="col-md-4" ng-if="payingAccount.type_i == 1">
+        <div class="col-md-3" ng-if="payingAccount.type_i == 1">
           <h4>{{payingAccount.name}}</h4>
           {{payingAccount.bank_t}}
           <br />
           {{payingAccount.account_t}}
         </div>
 
-        <div class="col-md-8">
+        <div class="col-md-6">
           <div class="form-group">
             <input ng-model="payingAccount.amount" type="text" class="form-control" name="" id="{{payingAccount.id + '-amount'}}" value="" placeholder="monto" />
           </div>
           <div class="form-group">
             <input ng-model="payingAccount.date" type="text" class="form-control" name="" id="{{payingAccount.id + '-date'}}" value="" placeholder="fecha y hora"/>
           </div>
+        </div>
+
+        <div class="col-md-2">
           <div class="checkbox">
             <label>
               <input ng-model="payingAccount.pending" type="checkbox"> Autorización remota
             </label>
           </div>
 
+          <div class="checkbox">
+            <label>
+              <input ng-model="payingAccount.recurring" type="checkbox"> Recurrente
+            </label>
+          </div>
+        </div>
+
+        <div class="col-md-1">
           <span class="glyphicon glyphicon-remove pull-right" ng-click="removePayingAccount(payingAccount.id)"></span>
         </div>
 
