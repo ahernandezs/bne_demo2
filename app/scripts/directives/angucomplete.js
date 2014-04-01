@@ -51,7 +51,8 @@ angular.module('angucomplete', [] )
               $scope.showDropdown = !$scope.showDropdown;
 
               if($scope.enableDefault) {
-                if(!$scope.defaultData) {
+                // if it is needed to have cache of default data
+                //if(!$scope.defaultData) {
                   $http.get($scope.url, {}).
                     success(function(responseData, status, headers, config) {
                     $scope.processResults(responseData[$scope.dataField], "");
@@ -60,9 +61,9 @@ angular.module('angucomplete', [] )
                     error(function(data, status, headers, config) {
                     console.log("error");
                   });
-                } else {
-                  $scope.results = $scope.defaultData;
-                }
+                //} else {
+                //  $scope.results = $scope.defaultData;
+                //}
 
                 $scope.searching = false;
                 $scope.currentIndex = -1;

@@ -9,6 +9,21 @@ angular.module('bnePaymentsFrontApp')
     $scope.challengeBeneficiary = false;
     $scope.payingAccounts = [];
 
+    $scope.updateRanking = function(id, target) {
+      $http.post('http://localhost:4567/api/updateranking', {id: id, target: target}).success(function(data, status, headers, config) {
+        console.log("Ranking updated");
+      }).
+        error(function(data, status, headers, config) {
+        console.log("Error updating account ranking");
+      });
+
+    };
+
+    $scope.$watch('originAccount', function() {
+      if($scope.originAccount) {
+          $scope.updateRanking($scope.originAccount.originalObject.id, 'source');
+      }
+    }, true);
 
     $scope.$watch('targetAccount', function() {
       if($scope.targetAccount) {
@@ -18,6 +33,8 @@ angular.module('bnePaymentsFrontApp')
           $scope.paymentConfirmation = true;
           $scope.paymentApplied = false;
           $scope.challenge = false;
+          $scope.updateRanking($scope.targetAccount.originalObject.id, 'target');
+
           $scope.targetAccount = null;
         } else {
           console.log("Error, account already added");
@@ -34,6 +51,8 @@ angular.module('bnePaymentsFrontApp')
           $scope.paymentConfirmation = true;
           $scope.paymentApplied = false;
           $scope.challenge = false;
+          $scope.updateRanking($scope.thirdAccount.originalObject.id, 'target');
+
           $scope.thirdAccount = null;
         } else {
           console.log("Error, account already added");
