@@ -14,7 +14,7 @@
     <label for="origin-search" class="col-sm-3 control-label">Cuenta origen:</label>
     <div class="col-sm-4">
       <angucomplete id="origin-account"
-              placeholder="Cuenta origen"
+              placeholder="Buscar cuenta origen"
               pause="20"
               selectedobject="originAccount"
               url="http://localhost:4567/api/accounts?query="
@@ -40,29 +40,47 @@ Pagar: &nbsp; <a href="">Servicios</a> &nbsp; <a href="">Tarjetas</a> &nbsp; <a 
       <span class="glyphicon glyphicon-plus"></span>
     </button>
 
-      <angucomplete id="target-account"
-              placeholder="Cuenta propias"
-              pause="20"
-              selectedobject="targetAccount"
-              url="http://localhost:4567/api/ownaccounts?query="
-              datafield="docs"
-              titlefield="name"
-              minlength="1"
-              enabledefault="true"
-              inputclass="form-control form-control-small"/>
+    <br />
 
+    <ul class="nav nav-tabs">
+      <li ng-class="{active: personalTab}"><a href="" ng-click="personalTab = true; thirdTab = false">Propias</a></li>
+      <li ng-class="{active: thirdTab}"><a href="" ng-click="thirdTab = true; personalTab = false">Terceros</a></li>
+    </ul>
 
-      <angucomplete id="target-thirdaccount"
-              placeholder="Cuenta de terceros"
-              pause="20"
-              selectedobject="thirdAccount"
-              url="http://localhost:4567/api/otheraccounts?query="
-              datafield="docs"
-              titlefield="name"
-              descriptionfield="bank_t"
-              minlength="1"
-              enabledefault="true"
-              inputclass="form-control form-control-small"/>
+    <br />
+
+    <div ng-show="personalTab">
+      <input ng-model="searchPersonalAccounts" type="search" class="form-control" placeholder="Buscar en cuentas propias" />
+      <div class="search-result">
+        <span class="pull-right">{{numPersonalAccounts}} cuentas</span>
+      </div>
+      <div class="account-list">
+        <div infinite-scroll="loadMorePersonalAccounts()" infinite-scroll-disabled="busyPersonalAccounts" infinite-scroll-distance="0" infinite-scroll-immediate-check="false" infinite-scroll-parent="true">
+          <div ng-repeat="account in targetPersonalAccounts">
+            <div class="account-item" ng-click="selectPersonalAccount(account)">
+              {{account.name}}
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div ng-show="thirdTab">
+      <input ng-model="searchThirdAccounts" type="search" class="form-control" placeholder="Buscar en otras cuentas" />
+      <div class="search-result">
+        <span class="pull-right">{{numThirdAccounts}} cuentas</span>
+      </div>
+      <div class="account-list">
+        <div infinite-scroll="loadMoreThirdAccounts()" infinite-scroll-disabled="busyPersonalAccounts" infinite-scroll-distance="0" infinite-scroll-immediate-check="false" infinite-scroll-parent="true">
+          <div ng-repeat="account in targetThirdAccounts">
+            <div class="account-item" ng-click="selectThirdAccount(account)">
+              {{account.name}}
+              <h6>{{account.bank_t}} {{account.account_t}}</h6>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
 
   </div>
 
@@ -346,7 +364,7 @@ Pagar: &nbsp; <a href="">Servicios</a> &nbsp; <a href="">Tarjetas</a> &nbsp; <a 
 
       <div class="row payment-account" ng-repeat="payingAccount in payingAccounts">
 
-        <div class="col-md-4" ng-if="payingAccount.type_i == 0">
+        <div class="col-md-3" ng-if="payingAccount.type_i == 0">
           <h4>{{payingAccount.name}}</h4>
         </div>
 

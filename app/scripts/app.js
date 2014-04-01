@@ -5,7 +5,8 @@ angular.module('bnePaymentsFrontApp', [
   'ngResource',
   'ngSanitize',
   'ngRoute',
-  'angucomplete'
+  'angucomplete',
+  'infinite-scroll'
 ])
   .config(['$routeProvider', function ($routeProvider) {
     $routeProvider

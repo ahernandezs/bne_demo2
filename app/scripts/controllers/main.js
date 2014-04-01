@@ -1,13 +1,113 @@
 'use strict';
 
 angular.module('bnePaymentsFrontApp')
-  .controller('MainCtrl', ['$scope', '$http', function ($scope, $http) {
+  .controller('MainCtrl', ['$scope', '$http', '$timeout', function ($scope, $http, $timeout) {
 
+    $scope.personalTab = true;
+    $scope.thirdTab = false;
     $scope.accountSelection = true;
     $scope.dashboard = true;
     $scope.addingBeneficiary = false;
     $scope.challengeBeneficiary = false;
     $scope.payingAccounts = [];
+    $scope.targetPersonalAccounts = [];
+    $scope.targetThirdAccounts = [];
+
+    $scope.rows = 20;
+    $scope.pause = 200;
+    $scope.searchPersonalAccounts = "";
+    $scope.pagePersonalAccounts = 0;
+    $scope.numPersonalAccounts = 0;
+    $scope.busyPersonalAccounts = false;
+    $scope.searchThirdAccounts = "";
+    $scope.pageThirdAccounts = 0;
+    $scope.numThirdAccounts = 0;
+    $scope.busyThirdAccounts = false;
+
+    $scope.getTargetPersonalAccounts = function(query, page) {
+      $scope.busyPersonalAccounts = true;
+
+      $http.get('http://localhost:4567/api/ownaccounts?query=' + query + '&rows=' + $scope.rows + '&page=' + page).success(function(data, status, headers, config) {
+        $scope.numPersonalAccounts = data.numFound;
+        for(var i = 0; i < data.docs.length; i++) {
+          $scope.targetPersonalAccounts.push(data.docs[i]);
+        }
+
+        if($scope.numPersonalAccounts <= $scope.targetPersonalAccounts.length) {
+          $scope.busyPersonalAccounts = true;
+        } else {
+          $scope.busyPersonalAccounts = false;
+        }
+      }).
+        error(function(data, status, headers, config) {
+          console.log("Error getting personal accounts");
+        });
+    };
+
+    $scope.loadMorePersonalAccounts = function() {
+      if($scope.busyPersonalAccounts) return;
+
+      $scope.pagePersonalAccounts++;
+      $scope.getTargetPersonalAccounts($scope.searchPersonalAccounts, $scope.pagePersonalAccounts);
+      console.log("Trying to load more " + $scope.pagePersonalAccounts + " of " + $scope.numPersonalAccounts + "[current = " + $scope.targetPersonalAccounts.length + "]");
+    };
+
+    $scope.getTargetThirdAccounts = function(query, page) {
+      $scope.busyThirdAccounts = true;
+
+      $http.get('http://localhost:4567/api/otheraccounts?query=' + query + '&rows=' + $scope.rows).success(function(data, status, headers, config) {
+        $scope.numThirdAccounts = data.numFound;
+
+        for(var i = 0; i < data.docs.length; i++) {
+          $scope.targetThirdAccounts.push(data.docs[i]);
+        }
+
+        if($scope.numThirdAccounts <= $scope.targetThirdAccounts.length) {
+          $scope.busyThirdAccounts = true;
+        } else {
+          $scope.busyThirdAccounts = false;
+        }
+      }).
+        error(function(data, status, headers, config) {
+          console.log("Error getting third accounts");
+        });
+    };
+
+    $scope.loadMoreThirdAccounts = function() {
+      if($scope.busyThirdAccounts) return;
+
+      $scope.pageThirdAccounts++;
+      $scope.getTargetThirdAccounts($scope.searchThirdAccounts, $scope.pageThirdAccounts);
+      console.log("Trying to load more " + $scope.pageThirdAccounts + " of " + $scope.numThirdAccounts + "[current = " + $scope.targetThirdAccounts.length + "]");
+    };
+    $scope.getTargetPersonalAccounts('', 0);
+    $scope.getTargetThirdAccounts('', 0);
+
+    $scope.$watch('searchPersonalAccounts', function() {
+      if($scope.searchTimer) {
+        $timeout.cancel($scope.searchTimer);
+      }
+
+      $scope.searchTimer = $timeout(function() {
+        $scope.pagePersonalAccounts = 0;
+        $scope.targetPersonalAccounts = [];
+        $scope.getTargetPersonalAccounts($scope.searchPersonalAccounts, $scope.pagePersonalAccounts);
+        $scope.searchTimer = null;
+      }, $scope.pause);
+    }, true);
+
+    $scope.$watch('searchThirdAccounts', function() {
+      if($scope.searchTimer) {
+        $timeout.cancel($scope.searchTimer);
+      }
+
+      $scope.searchTimer = $timeout(function() {
+        $scope.pageThirdAccounts = 0;
+        $scope.targetThirdAccounts = [];
+        $scope.getTargetThirdAccounts($scope.searchThirdAccounts);
+        $scope.searchTimer = null;
+      }, $scope.pause);
+    }, true);
 
     $scope.getDashboardData = function() {
       $http.get('http://localhost:4567/api/transactions').success(function(data, status, headers, config) {
@@ -39,15 +139,15 @@ angular.module('bnePaymentsFrontApp')
       }
     }, true);
 
-    $scope.$watch('targetAccount', function() {
-      if($scope.targetAccount) {
-        if($scope.getPayingAccountIndex($scope.targetAccount.originalObject.id) === -1) {
-          $scope.payingAccounts.push($scope.targetAccount.originalObject);
+    $scope.selectPersonalAccount = function(account) {
+      if(account) {
+        if($scope.getPayingAccountIndex(account.id) === -1) {
+          $scope.payingAccounts.push(account);
           $scope.dashboard = false;
           $scope.paymentConfirmation = true;
           $scope.paymentApplied = false;
           $scope.challenge = false;
-          $scope.updateRanking($scope.targetAccount.originalObject.id, 'target');
+          $scope.updateRanking(account.id, 'target');
 
           $scope.targetAccount = null;
         } else {
@@ -55,17 +155,17 @@ angular.module('bnePaymentsFrontApp')
         }
 
       }
-    }, true);
+    };
 
-    $scope.$watch('thirdAccount', function() {
-      if($scope.thirdAccount) {
-        if($scope.getPayingAccountIndex($scope.thirdAccount.originalObject.id) === -1) {
-          $scope.payingAccounts.push($scope.thirdAccount.originalObject);
+    $scope.selectThirdAccount = function(account) {
+      if(account) {
+        if($scope.getPayingAccountIndex(account.id) === -1) {
+          $scope.payingAccounts.push(account);
           $scope.dashboard = false;
           $scope.paymentConfirmation = true;
           $scope.paymentApplied = false;
           $scope.challenge = false;
-          $scope.updateRanking($scope.thirdAccount.originalObject.id, 'target');
+          $scope.updateRanking(account.id, 'target');
 
           $scope.thirdAccount = null;
         } else {
@@ -73,7 +173,7 @@ angular.module('bnePaymentsFrontApp')
         }
 
       }
-    }, true);
+    };
 
     $scope.getPayingAccountIndex = function(accountId) {
       for(var i = 0; i < $scope.payingAccounts.length; i++) {
