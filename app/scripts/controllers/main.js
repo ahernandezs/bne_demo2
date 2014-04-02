@@ -24,10 +24,12 @@ angular.module('bnePaymentsFrontApp')
     $scope.numThirdAccounts = 0;
     $scope.busyThirdAccounts = false;
 
+    $scope.url = "http://projects.anzen.com.mx:4567/"
+
     $scope.getTargetPersonalAccounts = function(query, page) {
       $scope.busyPersonalAccounts = true;
 
-      $http.get('http://localhost:4567/api/ownaccounts?query=' + query + '&rows=' + $scope.rows + '&page=' + page).success(function(data, status, headers, config) {
+      $http.get($scope.url + 'api/ownaccounts?query=' + query + '&rows=' + $scope.rows + '&page=' + page).success(function(data, status, headers, config) {
         $scope.numPersonalAccounts = data.numFound;
         for(var i = 0; i < data.docs.length; i++) {
           $scope.targetPersonalAccounts.push(data.docs[i]);
@@ -55,7 +57,7 @@ angular.module('bnePaymentsFrontApp')
     $scope.getTargetThirdAccounts = function(query, page) {
       $scope.busyThirdAccounts = true;
 
-      $http.get('http://localhost:4567/api/otheraccounts?query=' + query + '&rows=' + $scope.rows).success(function(data, status, headers, config) {
+      $http.get($scope.url + 'api/otheraccounts?query=' + query + '&rows=' + $scope.rows).success(function(data, status, headers, config) {
         $scope.numThirdAccounts = data.numFound;
 
         for(var i = 0; i < data.docs.length; i++) {
@@ -110,7 +112,7 @@ angular.module('bnePaymentsFrontApp')
     }, true);
 
     $scope.getDashboardData = function() {
-      $http.get('http://localhost:4567/api/transactions').success(function(data, status, headers, config) {
+      $http.get($scope.url + 'api/transactions').success(function(data, status, headers, config) {
         $scope.pending = data.pending;
         $scope.rejected = data.rejected;
         $scope.recurring = data.recurring;
@@ -124,7 +126,7 @@ angular.module('bnePaymentsFrontApp')
     $scope.getDashboardData();
 
     $scope.updateRanking = function(id, target) {
-      $http.post('http://localhost:4567/api/updateranking', {id: id, target: target}).success(function(data, status, headers, config) {
+      $http.post($scope.url + 'api/updateranking', {id: id, target: target}).success(function(data, status, headers, config) {
         console.log("Ranking updated");
       }).
         error(function(data, status, headers, config) {
