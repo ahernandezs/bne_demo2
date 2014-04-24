@@ -231,4 +231,8 @@ angular.module('bnePaymentsFrontApp')
 
       console.log($scope.benef);
     };
+
+    $scope.getAuthNumber = function () {
+      return Math.random().toString().slice(2, 7);
+    };
   }]);
