@@ -43,11 +43,10 @@
 <div class="head-pagos">
 	<form class="form-horizontal buscador" role="form">
 		<div class="container">
-			<div class="tarjeta tarjeta-clasica pull-left"></div>
-			<div class="form-group">
+			<div class="form-group pull-right col-md-9">
 				
 				<label for="origin-search" class="control-label pull-left">Cuenta origen:</label>
-				<div class="pull-left col-md-6">
+				<div class="pull-right col-md-10 tarjeta tarjeta-clasica">
 					<angucomplete class="col-md-12" id="origin-account"
 						placeholder="Buscar cuenta origen"
 						pause="20"
@@ -59,19 +58,9 @@
 						enabledefault="true"
 						inputclass="form-control form-control-small"/>
 				</div>
-				
 			</div>
 		</div>
 	</form>
-	<div class="franja-breadcrumb">
-		<div class="container">
-			<p class="checkbox">
-				Pagar:
-				<label class=""><input type="radio" name="pagos_radio" checked="checked"> Cuentas</label>
-				<label><input type="radio" name="pagos_radio"> Servicios</label>
-			</p>
-		</div>
-	</div>
 </div>
 
 
@@ -79,10 +68,12 @@
 <div class="container content-pagos">
 	<div class="row">
 		<div class="col-md-3 sidebar" ng-show="accountSelection">
-			<p>Selecciona cuentas destino: </p>
-			<button class="btn btn-default pull-right" type="submit" ng-click="addingBeneficiary=true; accountSelection=false; benef = {}">
-				<span class="glyphicon glyphicon-plus"></span>
-			</button>
+			<p class="tipo-pago">
+				Pagar:
+				<a href="javascript:void(0);" class="active">Cuentas</a>
+				<a href="javascript:void(0);">Servicios</a>
+			</p>
+			
 
 			<ul class="nav nav-tabs">
 				<li ng-class="{active: personalTab}"><a href="" ng-click="personalTab = true; thirdTab = false">Propias</a></li>
@@ -90,7 +81,10 @@
 			</ul>
 
 			<div class="list-cuentas" ng-show="personalTab">
-				<input ng-model="searchPersonalAccounts" type="search" class="form-control" placeholder="Celular / Alias / CLABE / Cuenta" />
+				<div class="clear-fix">
+					<input ng-model="searchPersonalAccounts" type="search" class="form-control pull-left" placeholder="Celular / Alias / CLABE / Cuenta" />
+					<button class="btn btn-default btn-beneficiario pull-right" type="submit" ng-click="addingBeneficiary=true; accountSelection=false; benef = {}">+</button>	
+				</div>
 				<!-- <div class="search-result">
 					<span class="pull-right">{{numPersonalAccounts}} cuentas</span>
 				</div> -->
@@ -102,7 +96,6 @@
 							</div>
 						</div>
 					</div>
-					<a href="javascript:void(0);" class="vertodas">Ver todas</a>
 				</div>
 			</div>
 
@@ -125,274 +118,238 @@
 		</div>
 
 		<div class="col-md-3 sidebar" ng-show="addingBeneficiary">
-		<div class="benef-header">
-			Agregar beneficiario
-			<span class="glyphicon glyphicon-remove pull-right" ng-click="addingBeneficiary=false; accountSelection=true;"></span>
-		</div>
+			<div class="beneficiario">
+				<div class="benef-header">
+					<strong>Nuevo beneficiario</strong>
+					<button class="btn btn-default btn-beneficiario pull-right" type="submit" ng-click="addingBeneficiary=false; accountSelection=true;">X</button>	
+				</div>
 
-		<div class="yellow-message" ng-show="challengeBeneficiary">
-			<p>Ingresa manualmente tu clave dinámica</p>
-			<div class="row">
-				<div class="col-md-12">
-					<div class="input-group">
-						<span class="input-group-addon">23456789</span>
-						<input type="password" class="form-control" ng-model="inputChallngBenef"/>
+				<div class="net-key clear-fix" ng-show="challengeBeneficiary">
+					<p>Ingresa manualmente tu clave din&aacute;mica</p>
+					<div class="row">
+						<div class="col-md-12">
+							<div class="input-group">
+								<span class="input-group-addon">23456789</span>
+								<input type="password" class="form-control" ng-model="inputChallngBenef"/>
+							</div>
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-md-12">
+							<button ng-click="addBeneficiary()" type="button" class="btn btn-primary pull-right">Confirmar</button>
+						</div>
+					</div>
+				</div>
+
+				<form role="form">
+					<div class="checkbox">
+						<label>
+							<input type="checkbox" ng-model="paymentOrder" ng-model="benef.paymentOrder"> Orden de pago
+						</label>
+					</div>
+
+					<div class="form-group">
+						<input type="text" class="form-control" placeholder="Nombre / Alias" ng-model="benef.name"/>
+					</div>
+
+					<div class="form-group">
+						<input type="email" class="form-control" placeholder="Correo electrónico" ng-model="benef.email"/>
+					</div>
+
+					<div ng-show="!paymentOrder">
+						<div class="form-group">
+							<input type="text" class="form-control" placeholder="Clabe | Tarjeta | Celular" ng-model="benef.account_s"/>
+						</div>
+					</div>
+
+					<div ng-show="paymentOrder">
+						<div class="form-group">
+					  		<input type="text" class="form-control" placeholder="Sector económico" ng-model="benef.sector"/>
+						</div>
+						<div class="form-group">
+					  		<div class="row">
+								<div class="col-md-6">
+						  			<div class="checkbox">
+										<label>
+							  				<input type="radio" name="personType" ng-model="benef.personType" value="person"> Física
+										</label>
+						  			</div>
+								</div>
+								<div class="col-md-6">
+						  			<div class="checkbox">
+										<label>
+							  				<input type="radio" name="personType" ng-model="benef.personType" value="company"> Moral
+										</label>
+						  			</div>
+								</div>
+					  		</div>
+						</div>
 				  	</div>
+					<div class="form-group">
+						<input type="text" class="form-control" placeholder="Importe máximo" ng-model="benef.max_amount"/>
+					</div>
+					<div class="form-group">
+						<input type="text" class="form-control" placeholder="Teléfono celular" ng-model="benef.cellphone"/>
+					</div>
+				  	<button ng-click="inputChallngBenef = ''; challengeBeneficiary = true" type="submit" class="btn btn-primary pull-right">Aceptar</button>
+				</form>
+			</div>
+		</div>
+		<div class="col-md-3 sidebar" ng-show="addedBeneficiary">
+			<div class="beneficiario">
+				<div class="benef-header">
+					<strong>Beneficiario dado de alta</strong>
+					<button class="btn btn-default btn-beneficiario pull-right" type="submit" ng-click="addedBeneficiary=false; accountSelection=true;">X</button>	
+				</div>
+
+				<div class="benef-added">
+		  			<div class="row">
+						<div class="col-md-12">
+			  				Nombre: {{benef.name}}
+						</div>
+		  			</div>
+
+		  			<div class="row">
+						<div class="col-md-12">
+			  				Alias: {{benef.alias}}
+						</div>
+		  			</div>
+
+		  			<div ng-show="benef.sector">
+						<div class="row">
+			  				<div class="col-md-12">
+								Cuenta: {{benef.account_s}}
+			  				</div>
+						</div>
+		  			</div>
+
+		  			<div ng-show="benef.sector">
+						<div class="row">
+			  				<div class="col-md-12">
+								Sector: {{benef.sector}}
+			  				</div>
+						</div>
+
+						<div class="row">
+			  				<div class="col-md-12">
+								<span ng-show="benef.personType == 'person'">F&iacute;sica</span>
+								<span ng-show="benef.personType == 'company'">Moral</span>
+			  				</div>
+						</div>
+		  			</div>
+
+		  			<div class="row">
+						<div class="col-md-12">
+			  				Importe m&aacute;ximo: {{benef.max_amount}}
+						</div>
+		  			</div>
+
+		  			<div class="row">
+						<div class="col-md-12">
+			  				Correo electr&oacute;nico: {{benef.email}}
+						</div>
+		  			</div>
+
+		  			<div class="row">
+						<div class="col-md-12">
+			  				Tel&eacute;fono celular: {{benef.cellphone}}
+						</div>
+		  			</div>
 				</div>
 			</div>
+		</div>
+
+
+		<div class="col-md-9 main" ng-show="dashboard">
+			<div class="row">
+				<div class="col-md-6">
+					<div class="contenedor-tabla">
+						<div class="head-contenedor">
+							<h4 class="pull-left">Pendientes</h4>
+							<span class="badge yellow pull-left">
+								{{pending.length}}
+							</span>
+							<button class="btn btn-table pull-right">
+								<span class="glyphicon glyphicon-ok"></span> Autorizar
+							</button>
+						</div>
+						
+						<table class="table">
+							<tbody>
+								<tr ng-repeat="txn in pending">
+									<td>
+										{{txn.target_name_t}}<br>
+										<strong>{{txn.target_bank_t}}</strong>
+									</td>
+									<td>
+										{{txn.amount_d | currency}}
+										
+									</td>
+									<td>{{txn.date_dt | date:'dd/MM/yyyy'}}</td>
+								</tr>
+							</tbody>
+							<thead>
+								<tr>
+									<td>Cuenta destino</td>
+									<td>Monto</td>
+									<td>Fecha</td>
+								</tr>
+							</thead>
+						</table>
+					</div>
+				</div>
+
+				<div class="col-md-6">
+					<div class="contenedor-tabla">
+						<div class="head-contenedor">
+							<h4 class="pull-left">Rechazados</h4>
+							<span class="badge red pull-left">
+							  {{rejected.length}}
+							</span>
+						</div>
+						<table class="table">
+							<tbody>
+								<tr ng-repeat="txn in rejected">
+									<td>
+										{{txn.target_name_t}}<br>
+										<strong>{{txn.target_bank_t}} {{txn.target_account_t}}</strong>
+									</td>
+									<td>
+										{{txn.amount_d | currency}}
+									</td>
+									<td>{{txn.date_dt | date:'dd/MM/yyyy'}}</td>
+								</tr>
+							</tbody>
+							<thead>
+								<tr>
+									<td>Cuenta destino</td>
+									<td>Monto</td>
+									<td>Fecha</td>
+								</tr>
+							</thead>
+						</table>
+					</div>
+				</div>
+
+			</div>
+
 			<div class="row">
 				<div class="col-md-12">
-					<button ng-click="addBeneficiary()" type="button" class="btn btn-info pull-right">Confirmar</button>
-				</div>
-			</div>
-		</div>
-
-		<form role="form">
-		  <div class="checkbox pull-right">
-			<label>
-			  <input type="checkbox" ng-model="paymentOrder" ng-model="benef.paymentOrder"> Orden de pago
-			</label>
-		  </div>
-
-		  <div class="form-group">
-			<input type="text" class="form-control" placeholder="Nombre / Alias" ng-model="benef.name"/>
-		  </div>
-
-		  <div class="form-group">
-			<input type="email" class="form-control" placeholder="Correo electrónico" ng-model="benef.email"/>
-		  </div>
-
-		  <div ng-show="!paymentOrder">
-			<div class="form-group">
-			  <input type="text" class="form-control" placeholder="Clabe | Tarjeta | Celular" ng-model="benef.account_s"/>
-			</div>
-		  </div>
-
-		  <div ng-show="paymentOrder">
-			<div class="form-group">
-			  <input type="text" class="form-control" placeholder="Sector económico" ng-model="benef.sector"/>
-			</div>
-			<div class="form-group">
-			  <div class="row">
-				<div class="col-md-6">
-				  <div class="checkbox">
-					<label>
-					  <input type="radio" name="personType" ng-model="benef.personType" value="person"> Física
-					</label>
-				  </div>
-				</div>
-
-				<div class="col-md-6">
-				  <div class="checkbox">
-					<label>
-					  <input type="radio" name="personType" ng-model="benef.personType" value="company"> Moral
-					</label>
-				  </div>
-				</div>
-			  </div>
-
-			</div>
-		  </div>
-
-		  <div class="form-group">
-			<input type="text" class="form-control" placeholder="Importe máximo" ng-model="benef.max_amount"/>
-		  </div>
-
-		  <div class="form-group">
-			<input type="text" class="form-control" placeholder="Teléfono celular" ng-model="benef.cellphone"/>
-		  </div>
-
-		  <button ng-click="inputChallngBenef = ''; challengeBeneficiary = true" type="submit" class="btn btn-primary btn-block">Agregar</button>
-		</form>
-	</div>
-
-
-	<div class="col-md-3 sidebar" ng-show="addedBeneficiary">
-	<div class="benef-header">
-	  Beneficiario dado de alta
-	  <span class="glyphicon glyphicon-remove pull-right" ng-click="addedBeneficiary=false; accountSelection=true;"></span>
-	</div>
-
-	<div class="benef-added">
-	  <div class="row">
-		<div class="col-md-12">
-		  Nombre: {{benef.name}}
-		</div>
-	  </div>
-
-	  <div class="row">
-		<div class="col-md-12">
-		  Alias: {{benef.alias}}
-		</div>
-	  </div>
-
-	  <div ng-show="benef.sector">
-		<div class="row">
-		  <div class="col-md-12">
-			Cuenta: {{benef.account_s}}
-		  </div>
-		</div>
-	  </div>
-
-	  <div ng-show="benef.sector">
-		<div class="row">
-		  <div class="col-md-12">
-			Sector: {{benef.sector}}
-		  </div>
-		</div>
-
-		<div class="row">
-		  <div class="col-md-12">
-			<span ng-show="benef.personType == 'person'">Física</span>
-			<span ng-show="benef.personType == 'company'">Moral</span>
-		  </div>
-		</div>
-	  </div>
-
-	  <div class="row">
-		<div class="col-md-12">
-		  Importe máximo: {{benef.max_amount}}
-		</div>
-	  </div>
-
-	  <div class="row">
-		<div class="col-md-12">
-		  Correo electrónico: {{benef.email}}
-		</div>
-	  </div>
-
-	  <div class="row">
-		<div class="col-md-12">
-		  Teléfono celular: {{benef.cellphone}}
-		</div>
-	  </div>
-
-	</div>
-
-	</div>
-
-
-	<div class="col-md-9 main" ng-show="dashboard">
-		<div class="row">
-			<div class="col-md-6">
 				<div class="contenedor-tabla">
 					<div class="head-contenedor">
-						<h4 class="pull-left">Pendientes</h4>
-						<span class="badge pull-right">
-							{{pending.length}}
-						</span>
+						<h4 class="pull-left">Recurrentes</h4>
+						<button class="btn btn-table pull-right">
+							<span class="glyphicon glyphicon-refresh"></span> Reutilizar pagos
+						</button>
 					</div>
-					
 					<table class="table">
 						<tbody>
-							<tr ng-repeat="txn in pending">
-								<td>
-									{{txn.target_name_t}}
-									{{txn.target_bank_t}}
-								</td>
-								<td>
-									{{txn.amount_d | currency}}
-									<!-- {{txn.date_dt | date:'dd/MM/yyyy'}} -->
-								</td>
-								<td><a href="javascript:void(0);">Autorizar</a></td>
-							</tr>
-						</tbody>
-						<thead>
-							<tr>
-								<td>Cuenta destino</td>
-								<td>Monto</td>
-								<td></td>
-							</tr>
-						</thead>
-					</table>
-				</div>
-			</div>
-
-			<div class="col-md-6">
-		  		<div class="contenedor-tabla">
-		  			<div class="head-contenedor">
-		  				<h4 class="pull-left">Rechazados</h4>
-						<span class="badge pull-right">
-						  {{rejected.length}}
-						</span>
-		  			</div>
-		  			<table class="table">
-						<tbody>
-							<tr ng-repeat="txn in rejected">
-								<td>
-									{{txn.target_name_t}}
-									{{txn.target_bank_t}} {{txn.target_account_t}}
-								</td>
-								<td>
-									{{txn.amount_d | currency}}
-									<!-- {{txn.date_dt | date:'dd/MM/yyyy'}} -->
-								</td>
-								<td><a href="javascript:void(0);">Reintentar /</a></td>
-							</tr>
-						</tbody>
-						<thead>
-							<tr>
-								<td>Cuenta destino</td>
-								<td>Monto</td>
-								<td></td>
-							</tr>
-						</thead>
-					</table>
-		  		</div>
-			</div>
-
-		</div>
-
-		<div class="row">
-			<div class="col-md-12">
-		  	<div class="contenedor-tabla">
-		  		<div class="head-contenedor">
-		  			<h4 class="pull-left">Recurrentes</h4>
-		  		</div>
-		  		<table class="table">
-		  			<tbody>
-		  				<tr ng-repeat="txn in recurring">
-							<td>
-								{{txn.target_name_t}}
-							</td>
-							<td>
-								{{txn.target_bank_t}} {{txn.target_account_t}}
-							</td>
-							<td>
-								{{txn.amount_d | currency}}
-							</td>
-							<td>
-								{{txn.date_dt | date:'dd/MM/yyyy h:mma'}}
-							</td>
-							<td>
-								<span ng-show="txn.pending_b">Pendiente por autorizar</span>
-								<span ng-show="txn.applied_b">Aplicada</span>
-							</td>
-						</tr>
-		  			</tbody>
-				</table>
-		  		<button class="btn btn-default pull-right" type="submit">
-					<span class="glyphicon glyphicon-refresh"></span>
-					Reutilizar pagos
-				</button>
-		  	</div>
-		  </div>
-		</div>
-
-		<div class="row">
-			<div class="col-md-12">
-		  		<div class="contenedor-tabla">
-		  			<div class="head-contenedor">
-			  			<h4 class="pull-left">Historial de pagos</h4>
-			  		</div>
-			  		<table class="table">
-			  			<tbody>
-			  				<tr ng-repeat="txn in applied">
+							<tr ng-repeat="txn in recurring">
 								<td>
 									{{txn.target_name_t}}
 								</td>
 								<td>
-									{{txn.target_bank_t}} {{txn.target_account_t}}
+									<strong>{{txn.target_bank_t}} {{txn.target_account_t}}</strong>
 								</td>
 								<td>
 									{{txn.amount_d | currency}}
@@ -405,180 +362,310 @@
 									<span ng-show="txn.applied_b">Aplicada</span>
 								</td>
 							</tr>
-			  			</tbody>
+						</tbody>
+						<thead>
+							<tr>
+								<td>Alias</td>
+								<td>Cuenta Destino</td>
+								<td>Monto</td>
+								<td>Fecha y Hora</td>
+								<td>Estatus</td>
+							</tr>
+						</thead>
 					</table>
-		  		</div>
-			</div>
-		</div>
-	</div>
-
-	  <div class="col-md-9 main" ng-show="paymentConfirmation">
-
-		<div class="yellow-message" ng-show="challenge">
-		  <p>Ingresa manualmente tu clave dinámica</p>
-		  <div class="row">
-			<div class="col-md-4">
-			  <div class="input-group">
-				<span class="input-group-addon">23456789</span>
-				<input type="password" class="form-control" ng-model="inputChallngPayment"/>
-			  </div>
-			</div>
-			<div class="col-md-4">
-			  <button ng-click="processPayment()" type="button" class="btn btn-info">Confirmar</button>
-			</div>
-		  </div>
-		</div>
-
-		<form class="form-inline" role="form">
-
-		  <div class="row payment-account" ng-repeat="payingAccount in payingAccounts">
-
-			<div class="col-md-3" ng-if="payingAccount.type_i == 0">
-			  <h4>{{payingAccount.name}}</h4>
-			</div>
-
-			<div class="col-md-3" ng-if="payingAccount.type_i == 1">
-			  <h4>{{payingAccount.name}}</h4>
-			  {{payingAccount.bank_t}}
-			  <br />
-			  {{payingAccount.account_t}}
-			</div>
-
-			<div class="col-md-6">
-			  <div class="form-group">
-				<input ng-model="payingAccount.amount" type="text" class="form-control" name="" id="{{payingAccount.id + '-amount'}}" value="" placeholder="monto" />
-			  </div>
-			  <div class="form-group">
-				<input ng-model="payingAccount.date" type="text" class="form-control" name="" id="{{payingAccount.id + '-date'}}" value="" placeholder="fecha y hora"/>
+				</div>
 			  </div>
 			</div>
 
-			<div class="col-md-2">
-			  <div class="checkbox">
-				<label>
-				  <input ng-model="payingAccount.pending" type="checkbox"> Autorización remota
-				</label>
+			<div class="row">
+				<div class="col-md-12">
+					<div class="contenedor-tabla">
+						<div class="head-contenedor">
+							<h4 class="pull-left">Historial de pagos</h4>
+						</div>
+						<table class="table">
+							<tbody>
+								<tr ng-repeat="txn in applied">
+									<td>
+										{{txn.target_name_t}}
+									</td>
+									<td>
+										<strong>{{txn.target_bank_t}} {{txn.target_account_t}}</strong>
+									</td>
+									<td>
+										{{txn.amount_d | currency}}
+									</td>
+									<td>
+										{{txn.date_dt | date:'dd/MM/yyyy h:mma'}}
+									</td>
+									<td>
+										<span ng-show="txn.pending_b">Pendiente por autorizar</span>
+										<span ng-show="txn.applied_b">Aplicada</span>
+									</td>
+								</tr>
+							</tbody>
+							<thead>
+								<tr>
+									<td>Alias</td>
+									<td>Cuenta Destino</td>
+									<td>Monto</td>
+									<td>Fecha y Hora</td>
+									<td>Estatus</td>
+								</tr>
+							</thead>
+						</table>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<div class="col-md-9 main" ng-show="paymentConfirmation">
+			<h1 class="title">Pagos</h1>
+			<div class="net-key" ng-show="challenge">
+				<p class="pull-left">Ingresa manualmente tu clave din&aacute;mica</p>
+				<button ng-click="processPayment()" type="button" class="btn btn-primary pull-right">Confirmar</button>
+				<div class="input-group col-md-4 pull-right">
+					<span class="input-group-addon">23456789</span>
+					<input type="password" class="form-control" ng-model="inputChallngPayment"/>
+				</div>
+			</div>
+
+
+			<div class="contenedor-tabla">
+				<div class="head-contenedor">
+					<h4 class="pull-left">Pago a cuentas</h4>
+					<button class="btn btn-table pull-right">
+						<span class="glyphicon glyphicon glyphicon-unchecked"></span> Autorizaci&oacute;n remota
+					</button>
+				</div>
+				<table class="table">
+					<tbody>
+						<tr ng-repeat="payingAccount in payingAccounts">
+							<td>
+								{{payingAccount.name}}
+							</td>
+							<td>
+								<strong>{{payingAccount.name}} {{payingAccount.bank_t}} {{payingAccount.account_t}}</strong>
+							</td>
+							<td>
+								<input ng-model="payingAccount.amount" type="text" class="form-control" 
+									name="" 
+									id="{{payingAccount.id + '-amount'}}" 
+									value="" 
+									placeholder="$" />
+							</td>
+							<td>
+								<div class="col-md-6">
+									<input ng-model="payingAccount.date" type="text" class="form-control pull-left " 
+										name="" 
+										id="{{payingAccount.id + '-date'}}" 
+										value="" 
+										placeholder="30/04/2014"/>
+								</div>
+								<div class="col-md-6">
+									<input type="text" class="form-control pull-left col-md-3" 
+										name="" 
+										value="" 
+										placeholder="15:55"/>
+								</div>
+								<div class="checkbox clear-fix">
+									<label class="pull-right">
+										<input ng-model="payingAccount.recurring" type="checkbox"> <strong>PAGO RECURRENTE</strong>
+									</label>
+								</div>
+							</td>
+							<td>
+								<button class="btn btn-close" ng-click="removePayingAccount(payingAccount.id)">X</button>
+							</td>
+						</tr>
+					</tbody>
+					<thead>
+						<tr>
+							<td>Alias</td>
+							<td>Cuenta Destino</td>
+							<td>Monto</td>
+							<td>Fecha y Hora de Aplicaci&oacute;n</td>
+							<td></td>
+						</tr>
+					</thead>
+				</table>
+			</div>
+			<div class="clear-fix">
+				<button ng-click="inputChallngPayment = ''; challenge=true" type="submit" class="btn btn-primary pull-right">Pagar</button>
+			</div>
+			
+
+			<!-- <form class="form-inline" role="form">
+
+			  <div class="row payment-account" ng-repeat="payingAccount in payingAccounts">
+
+				<div class="col-md-3" ng-if="payingAccount.type_i == 0">
+				  <h4>{{payingAccount.name}}</h4>
+				</div>
+
+				<div class="col-md-3" ng-if="payingAccount.type_i == 1">
+				  <h4>{{payingAccount.name}}</h4>
+				  {{payingAccount.bank_t}}
+				  <br />
+				  {{payingAccount.account_t}}
+				</div>
+
+				<div class="col-md-6">
+				  <div class="form-group">
+					<input ng-model="payingAccount.amount" type="text" class="form-control" name="" id="{{payingAccount.id + '-amount'}}" value="" placeholder="monto" />
+				  </div>
+				  <div class="form-group">
+					<input ng-model="payingAccount.date" type="text" class="form-control" name="" id="{{payingAccount.id + '-date'}}" value="" placeholder="fecha y hora"/>
+				  </div>
+				</div>
+
+				<div class="col-md-2">
+				  <div class="checkbox">
+					<label>
+					  <input ng-model="payingAccount.pending" type="checkbox"> Autorización remota
+					</label>
+				  </div>
+
+				  <div class="checkbox">
+					<label>
+					  <input ng-model="payingAccount.recurring" type="checkbox"> Recurrente
+					</label>
+				  </div>
+				</div>
+
+				<div class="col-md-1">
+				  <span class="glyphicon glyphicon-remove pull-right" ng-click="removePayingAccount(payingAccount.id)"></span>
+				</div>
+
 			  </div>
 
-			  <div class="checkbox">
-				<label>
-				  <input ng-model="payingAccount.recurring" type="checkbox"> Recurrente
-				</label>
-			  </div>
-			</div>
+			  <button ng-click="inputChallngPayment = ''; challenge=true" type="submit" class="btn btn-primary pull-right">Pagar</button>
 
-			<div class="col-md-1">
-			  <span class="glyphicon glyphicon-remove pull-right" ng-click="removePayingAccount(payingAccount.id)"></span>
-			</div>
-
-		  </div>
-
-		  <button ng-click="inputChallngPayment = ''; challenge=true" type="submit" class="btn btn-primary pull-right">Pagar</button>
-
-		</form>
-	  </div>
-
-	  <div class="col-md-9 main" ng-show="paymentApplied">
-		<div ng-show="appliedPayments.length > 0">
-		  <h4>Pago aplicado</h4>
-
-		  <div class="row payment-account applied" ng-repeat="payingAccount in appliedPayments">
-
-			<div class="col-md-4" ng-if="payingAccount.type_i == 0">
-			  <h4>{{payingAccount.name}}</h4>
-			</div>
-
-			<div class="col-md-4" ng-if="payingAccount.type_i == 1">
-			  <h4>{{payingAccount.name}}</h4>
-			  {{payingAccount.bank_t}}
-			  <br />
-			  {{payingAccount.account_t}}
-			</div>
-
-			<div class="col-md-4">
-			  {{payingAccount.amount}}
-			</div>
-
-			<div class="col-md-4">
-			  {{payingAccount.date}}
-			</div>
-
-		  </div>
+			</form> -->
 		</div>
 
-		<div ng-show="pendingPayments.length > 0">
-		  <h4>Pendiente</h4>
-
-		  <div class="row payment-account pending" ng-repeat="payingAccount in pendingPayments">
-
-			<div class="col-md-4" ng-if="payingAccount.type_i == 0">
-			  <h4>{{payingAccount.name}}</h4>
+		<div class="col-md-9 main" ng-show="paymentApplied">
+			<h1 class="title">Pago aplicado</h1>
+			<div class="contenedor-tabla">
+				<div class="head-contenedor">
+					<h4 class="pull-left">Pago Aplicado</h4>
+					<span class="badge green pull-left"></span>
+				</div>
+				<table class="table">
+					<thead>
+						<tr>
+							<td>N&uacute;mero de autorizaci&oacute;n</td>
+							<td>Alias</td>
+							<td>Cuenta Destino</td>
+							<td>Monto</td>
+							<td>Fecha y Hora de Aplicaci&oacute;n</td>
+						</tr>
+					</thead>
+				</table>
 			</div>
 
-			<div class="col-md-4" ng-if="payingAccount.type_i == 1">
-			  <h4>{{payingAccount.name}}</h4>
-			  {{payingAccount.bank_t}}
-			  <br />
-			  {{payingAccount.account_t}}
+			<div class="contenedor-tabla">
+				<div class="head-contenedor">
+					<h4 class="pull-left">Pendiente</h4>
+					<span class="badge yellow pull-left"></span>
+				</div>
+				<table class="table">
+					<thead>
+						<tr>
+							<td>N&uacute;mero de autorizaci&oacute;n</td>
+							<td>Alias</td>
+							<td>Cuenta Destino</td>
+							<td>Monto</td>
+							<td>Fecha y Hora de Aplicaci&oacute;n</td>
+						</tr>
+					</thead>
+				</table>
 			</div>
 
-			<div class="col-md-4">
-			  {{payingAccount.amount}}
+			<div class="contenedor-tabla">
+				<div class="head-contenedor">
+					<h4 class="pull-left">Rechazada</h4>
+					<span class="badge red pull-left"></span>
+					<button class="btn btn-table pull-right">
+						<span class="glyphicon glyphicon glyphicon-repeat"></span> Reintentar
+					</button>
+				</div>
+				<table class="table">
+					<thead>
+						<tr>
+							<td>N&uacute;mero de autorizaci&oacute;n</td>
+							<td>Alias</td>
+							<td>Cuenta Destino</td>
+							<td>Monto</td>
+							<td>Fecha y Hora de Aplicaci&oacute;n</td>
+						</tr>
+					</thead>
+				</table>
 			</div>
 
-			<div class="col-md-4">
-			  {{payingAccount.date}}
+			<div ng-show="appliedPayments.length > 0">  
+			  	<div class="row payment-account applied" ng-repeat="payingAccount in appliedPayments">
+					<div class="col-md-4" ng-if="payingAccount.type_i == 0">
+						<h4>{{payingAccount.name}}</h4>
+					</div>
+
+					<div class="col-md-4" ng-if="payingAccount.type_i == 1">
+						<h4>{{payingAccount.name}}</h4>
+						{{payingAccount.bank_t}}
+						<br />
+						{{payingAccount.account_t}}
+					</div>
+					<div class="col-md-4">
+						{{payingAccount.amount}}
+					</div>
+					<div class="col-md-4">
+						{{payingAccount.date}}
+					</div>
+				</div>
 			</div>
 
-		  </div>
+			<div ng-show="pendingPayments.length > 0">
+				<h4>Pendiente</h4>
+				<div class="row payment-account pending" ng-repeat="payingAccount in pendingPayments">
+					<div class="col-md-4" ng-if="payingAccount.type_i == 0">
+						<h4>{{payingAccount.name}}</h4>
+					</div>
+					<div class="col-md-4" ng-if="payingAccount.type_i == 1">
+						<h4>{{payingAccount.name}}</h4>
+						{{payingAccount.bank_t}}
+						<br />
+						{{payingAccount.account_t}}
+					</div>
+					<div class="col-md-4">
+						{{payingAccount.amount}}
+					</div>
+					<div class="col-md-4">
+						{{payingAccount.date}}
+					</div>
+				</div>
+			</div>
+
+			<div ng-show="rejectedPayments.length > 0">
+				<h4>Rechazado</h4>
+				<div class="row payment-account rejected" ng-repeat="payingAccount in rejectedPayments">
+					<div class="col-md-4" ng-if="payingAccount.type_i == 0">
+						<h4>{{payingAccount.name}}</h4>
+					</div>
+					<div class="col-md-4" ng-if="payingAccount.type_i == 1">
+						<h4>{{payingAccount.name}}</h4>
+						{{payingAccount.bank_t}}
+						<br />
+						{{payingAccount.account_t}}
+					</div>
+					<div class="col-md-4">
+						{{payingAccount.amount}}
+					</div>
+					<div class="col-md-4">
+						{{payingAccount.date}}
+					</div>
+				</div>
+			</div>
+			<button ng-click="paymentApplied=false; dashboard=true" type="submit" class="btn btn-primary pull-right">Ir a principal</button>
 		</div>
-
-		<div ng-show="rejectedPayments.length > 0">
-		  <h4>Rechazado</h4>
-
-		  <div class="row payment-account rejected" ng-repeat="payingAccount in rejectedPayments">
-
-			<div class="col-md-4" ng-if="payingAccount.type_i == 0">
-			  <h4>{{payingAccount.name}}</h4>
-			</div>
-
-			<div class="col-md-4" ng-if="payingAccount.type_i == 1">
-			  <h4>{{payingAccount.name}}</h4>
-			  {{payingAccount.bank_t}}
-			  <br />
-			  {{payingAccount.account_t}}
-			</div>
-
-			<div class="col-md-4">
-			  {{payingAccount.amount}}
-			</div>
-
-			<div class="col-md-4">
-			  {{payingAccount.date}}
-			</div>
-
-		  </div>
-		</div>
-
-		<button ng-click="paymentApplied=false; dashboard=true" type="submit" class="btn btn-default pull-right">Ir a principal</button>
-	  </div>
 	</div>
 </div>
-
-<footer>
-	<div class="container">
-		<div class="row">
-			<div class="col-md-8">
-				El Banco Nacional de M&eacute;xico
-				<a href="javascript:void(0);">Copyright 2012</a>
-				<a href="javascript:void(0);">Ayuda</a>
-				<a href="javascript:void(0);">Tour</a>
-			</div>
-			<div class="col-md-4">
-				<span class="text-right">
-					<a href="javascript:void(0)" class="margin0">T&eacute;rminos, Condiciones de Uso y Privacidad</a>
-				</span>
-			</div>
-		</div>
-	</div>
-</footer>
