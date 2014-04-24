@@ -196,6 +196,7 @@ angular.module('bnePaymentsFrontApp')
 
       if($scope.payingAccounts.length < 1) {
         $scope.paymentConfirmation = false;
+        $scope.dashboard = true;
       }
     };
 

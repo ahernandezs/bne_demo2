@@ -367,6 +367,9 @@ header{
 				margin: 10px 5px 0 0;
 			}
 			.account-list{
+				border-top: 1px solid #eeeeee;
+        height: 500px;
+        overflow-y:scroll;
 
 				padding: 0 10px 20px 10px;
 				.account-item{
