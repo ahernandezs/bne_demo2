@@ -196,6 +196,7 @@ angular.module('bnePaymentsFrontApp')
 
       if($scope.payingAccounts.length < 1) {
         $scope.paymentConfirmation = false;
+        $scope.dashboard = true;
       }
     };
 
@@ -229,5 +230,9 @@ angular.module('bnePaymentsFrontApp')
       $scope.challengeBeneficiary = false;
 
       console.log($scope.benef);
+    };
+
+    $scope.getAuthNumber = function () {
+      return Math.random().toString().slice(2, 7);
     };
   }]);

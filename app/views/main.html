@@ -463,7 +463,7 @@
 										placeholder="30/04/2014"/>
 								</div>
 								<div class="col-md-6">
-									<input type="text" class="form-control pull-left col-md-3" 
+									<input ng-model="payingAccount.hour" type="text" class="form-control pull-left col-md-3" 
 										name="" 
 										value="" 
 										placeholder="15:55"/>
@@ -493,7 +493,7 @@
 			<div class="clear-fix">
 				<button ng-click="inputChallngPayment = ''; challenge=true" type="submit" class="btn btn-primary pull-right">Pagar</button>
 			</div>
-			
+
 
 			<!-- <form class="form-inline" role="form">
 
@@ -546,7 +546,7 @@
 
 		<div class="col-md-9 main" ng-show="paymentApplied">
 			<h1 class="title">Pago aplicado</h1>
-			<div class="contenedor-tabla">
+      <div class="contenedor-tabla" ng-show="appliedPayments.length > 0">
 				<div class="head-contenedor">
 					<h4 class="pull-left">Pago Aplicado</h4>
 					<span class="badge green pull-left"></span>
@@ -561,10 +561,18 @@
 							<td>Fecha y Hora de Aplicaci&oacute;n</td>
 						</tr>
 					</thead>
+          <tr ng-repeat="payingAccount in appliedPayments">
+            <td>{{getAuthNumber()}}</td>
+            <td>{{payingAccount.name}} <span ng-if="payingAccount.type_i == 1">- {{payingAccount.bank_t}}</span></td>
+            <td ng-if="payingAccount.type_i == 0">{{payingAccount.last_digits_s}}</td>
+            <td ng-if="payingAccount.type_i == 1">{{payingAccount.account_t}}</td>
+            <td>{{payingAccount.amount}}</td>
+            <td>{{payingAccount.date}} {{payingAccount.hour}}</td>
+          </tr>
 				</table>
 			</div>
 
-			<div class="contenedor-tabla">
+      <div class="contenedor-tabla" ng-show="pendingPayments.length > 0">
 				<div class="head-contenedor">
 					<h4 class="pull-left">Pendiente</h4>
 					<span class="badge yellow pull-left"></span>
@@ -579,10 +587,18 @@
 							<td>Fecha y Hora de Aplicaci&oacute;n</td>
 						</tr>
 					</thead>
+          <tr ng-repeat="payingAccount in pendingPayments">
+            <td>{{getAuthNumber()}}</td>
+            <td>{{payingAccount.name}} <span ng-if="payingAccount.type_i == 1">- {{payingAccount.bank_t}}</span></td>
+            <td ng-if="payingAccount.type_i == 0">{{payingAccount.last_digits_s}}</td>
+            <td ng-if="payingAccount.type_i == 1">{{payingAccount.account_t}}</td>
+            <td>{{payingAccount.amount}}</td>
+            <td>{{payingAccount.date}} {{payingAccount.hour}}</td>
+          </tr>
 				</table>
 			</div>
 
-			<div class="contenedor-tabla">
+      <div class="contenedor-tabla" ng-show="rejectedPayments.length > 0">
 				<div class="head-contenedor">
 					<h4 class="pull-left">Rechazada</h4>
 					<span class="badge red pull-left"></span>
@@ -600,71 +616,17 @@
 							<td>Fecha y Hora de Aplicaci&oacute;n</td>
 						</tr>
 					</thead>
+          <tr ng-repeat="payingAccount in rejectedPayments">
+            <td>{{getAuthNumber()}}</td>
+            <td>{{payingAccount.name}} <span ng-if="payingAccount.type_i == 1">- {{payingAccount.bank_t}}</span></td>
+            <td ng-if="payingAccount.type_i == 0">{{payingAccount.last_digits_s}}</td>
+            <td ng-if="payingAccount.type_i == 1">{{payingAccount.account_t}}</td>
+            <td>{{payingAccount.amount}}</td>
+            <td>{{payingAccount.date}} {{payingAccount.hour}}</td>
+          </tr>
 				</table>
 			</div>
 
-			<div ng-show="appliedPayments.length > 0">  
-				<div class="row payment-account applied" ng-repeat="payingAccount in appliedPayments">
-					<div class="col-md-4" ng-if="payingAccount.type_i == 0">
-						<h4>{{payingAccount.name}}</h4>
-					</div>
-
-					<div class="col-md-4" ng-if="payingAccount.type_i == 1">
-						<h4>{{payingAccount.name}}</h4>
-						{{payingAccount.bank_t}}
-						<br />
-						{{payingAccount.account_t}}
-					</div>
-					<div class="col-md-4">
-						{{payingAccount.amount}}
-					</div>
-					<div class="col-md-4">
-						{{payingAccount.date}}
-					</div>
-				</div>
-			</div>
-
-			<div ng-show="pendingPayments.length > 0">
-				<h4>Pendiente</h4>
-				<div class="row payment-account pending" ng-repeat="payingAccount in pendingPayments">
-					<div class="col-md-4" ng-if="payingAccount.type_i == 0">
-						<h4>{{payingAccount.name}}</h4>
-					</div>
-					<div class="col-md-4" ng-if="payingAccount.type_i == 1">
-						<h4>{{payingAccount.name}}</h4>
-						{{payingAccount.bank_t}}
-						<br />
-						{{payingAccount.account_t}}
-					</div>
-					<div class="col-md-4">
-						{{payingAccount.amount}}
-					</div>
-					<div class="col-md-4">
-						{{payingAccount.date}}
-					</div>
-				</div>
-			</div>
-
-			<div ng-show="rejectedPayments.length > 0">
-				<h4>Rechazado</h4>
-				<div class="row payment-account rejected" ng-repeat="payingAccount in rejectedPayments">
-					<div class="col-md-4" ng-if="payingAccount.type_i == 0">
-						<h4>{{payingAccount.name}}</h4>
-					</div>
-					<div class="col-md-4" ng-if="payingAccount.type_i == 1">
-						<h4>{{payingAccount.name}}</h4>
-						{{payingAccount.bank_t}}
-						<br />
-						{{payingAccount.account_t}}
-					</div>
-					<div class="col-md-4">
-						{{payingAccount.amount}}
-					</div>
-					<div class="col-md-4">
-						{{payingAccount.date}}
-					</div>
-				</div>
-			</div>
 			<button ng-click="paymentApplied=false; dashboard=true" type="submit" class="btn btn-primary pull-right">Ir a principal</button>
 		</div>
 	</div>
