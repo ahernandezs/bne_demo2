@@ -164,34 +164,34 @@
 
 					<div ng-show="paymentOrder">
 						<div class="form-group">
-					  		<input type="text" class="form-control" placeholder="Sector económico" ng-model="benef.sector"/>
+							<input type="text" class="form-control" placeholder="Sector económico" ng-model="benef.sector"/>
 						</div>
 						<div class="form-group">
-					  		<div class="row">
+							<div class="row">
 								<div class="col-md-6">
-						  			<div class="checkbox">
+									<div class="checkbox">
 										<label>
-							  				<input type="radio" name="personType" ng-model="benef.personType" value="person"> Física
+											<input type="radio" name="personType" ng-model="benef.personType" value="person"> Física
 										</label>
-						  			</div>
+									</div>
 								</div>
 								<div class="col-md-6">
-						  			<div class="checkbox">
+									<div class="checkbox">
 										<label>
-							  				<input type="radio" name="personType" ng-model="benef.personType" value="company"> Moral
+											<input type="radio" name="personType" ng-model="benef.personType" value="company"> Moral
 										</label>
-						  			</div>
+									</div>
 								</div>
-					  		</div>
+							</div>
 						</div>
-				  	</div>
+					</div>
 					<div class="form-group">
 						<input type="text" class="form-control" placeholder="Importe máximo" ng-model="benef.max_amount"/>
 					</div>
 					<div class="form-group">
 						<input type="text" class="form-control" placeholder="Teléfono celular" ng-model="benef.cellphone"/>
 					</div>
-				  	<button ng-click="inputChallngBenef = ''; challengeBeneficiary = true" type="submit" class="btn btn-primary pull-right">Aceptar</button>
+					<button ng-click="inputChallngBenef = ''; challengeBeneficiary = true" type="submit" class="btn btn-primary pull-right">Aceptar</button>
 				</form>
 			</div>
 		</div>
@@ -203,58 +203,58 @@
 				</div>
 
 				<div class="benef-added">
-		  			<div class="row">
+					<div class="row">
 						<div class="col-md-12">
-			  				Nombre: {{benef.name}}
+							Nombre: {{benef.name}}
 						</div>
-		  			</div>
+					</div>
 
-		  			<div class="row">
+					<div class="row">
 						<div class="col-md-12">
-			  				Alias: {{benef.alias}}
+							Alias: {{benef.alias}}
 						</div>
-		  			</div>
+					</div>
 
-		  			<div ng-show="benef.sector">
+					<div ng-show="benef.sector">
 						<div class="row">
-			  				<div class="col-md-12">
+							<div class="col-md-12">
 								Cuenta: {{benef.account_s}}
-			  				</div>
+							</div>
 						</div>
-		  			</div>
+					</div>
 
-		  			<div ng-show="benef.sector">
+					<div ng-show="benef.sector">
 						<div class="row">
-			  				<div class="col-md-12">
+							<div class="col-md-12">
 								Sector: {{benef.sector}}
-			  				</div>
+							</div>
 						</div>
 
 						<div class="row">
-			  				<div class="col-md-12">
+							<div class="col-md-12">
 								<span ng-show="benef.personType == 'person'">F&iacute;sica</span>
 								<span ng-show="benef.personType == 'company'">Moral</span>
-			  				</div>
+							</div>
 						</div>
-		  			</div>
+					</div>
 
-		  			<div class="row">
+					<div class="row">
 						<div class="col-md-12">
-			  				Importe m&aacute;ximo: {{benef.max_amount}}
+							Importe m&aacute;ximo: {{benef.max_amount}}
 						</div>
-		  			</div>
+					</div>
 
-		  			<div class="row">
+					<div class="row">
 						<div class="col-md-12">
-			  				Correo electr&oacute;nico: {{benef.email}}
+							Correo electr&oacute;nico: {{benef.email}}
 						</div>
-		  			</div>
+					</div>
 
-		  			<div class="row">
+					<div class="row">
 						<div class="col-md-12">
-			  				Tel&eacute;fono celular: {{benef.cellphone}}
+							Tel&eacute;fono celular: {{benef.cellphone}}
 						</div>
-		  			</div>
+					</div>
 				</div>
 			</div>
 		</div>
@@ -604,7 +604,7 @@
 			</div>
 
 			<div ng-show="appliedPayments.length > 0">  
-			  	<div class="row payment-account applied" ng-repeat="payingAccount in appliedPayments">
+				<div class="row payment-account applied" ng-repeat="payingAccount in appliedPayments">
 					<div class="col-md-4" ng-if="payingAccount.type_i == 0">
 						<h4>{{payingAccount.name}}</h4>
 					</div>
