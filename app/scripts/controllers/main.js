@@ -246,4 +246,28 @@ angular.module('bnePaymentsFrontApp')
     $scope.getAuthNumber = function () {
       return Math.random().toString().slice(2, 7);
     };
+
+    $scope.getTotalPayment = function () {
+      var sum = 0;
+      for(var i = 0; i < $scope.payingAccounts.length; i++) {
+        var elem = $scope.payingAccounts[i].amount;
+        if(elem && parseFloat(elem)) {
+          sum += parseFloat(elem);
+        }
+      }
+
+      return sum;
+    };
+
+    $scope.getTotalAppliedPayment = function () {
+      var sum = 0;
+      for(var i = 0; i < $scope.appliedPayments.length; i++) {
+        var elem = $scope.appliedPayments[i].amount;
+        if(elem && parseFloat(elem)) {
+          sum += parseFloat(elem);
+        }
+      }
+
+      return sum;
+    };
   }]);

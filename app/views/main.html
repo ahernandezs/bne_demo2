@@ -728,7 +728,7 @@
 				</table>
 			</div>
 			<div class="clear-fix">
-				<p class="totales pull-right">Total a pagar: <span>$0.00</span></p>
+        <p class="totales pull-right">Total a pagar: <span> {{ getTotalPayment() | currency}}</span></p>
 			</div>
 			<div class="clear-fix area-botones">
 				<button ng-click="inputChallngPayment = ''; challenge=true" type="submit" class="btn btn-primary pull-right">Pagar</button>
@@ -800,11 +800,11 @@
 				<table class="table">
 					<tbody>
 						<tr ng-repeat="payingAccount in appliedPayments">
-							<td>{{getAuthNumber()}}</td>
+							<td>{{payingAccount.name.charCodeAt(0) + payingAccount.name.charCodeAt(payingAccount.name.length - 1)}}</td>
 							<td>{{payingAccount.name}} <span ng-if="payingAccount.type_i == 1">- {{payingAccount.bank_t}}</span></td>
 							<td ng-if="payingAccount.type_i == 0">{{payingAccount.last_digits_s}}</td>
 							<td ng-if="payingAccount.type_i == 1">{{payingAccount.account_t}}</td>
-							<td>{{payingAccount.amount}}</td>
+							<td>{{payingAccount.amount | currency}}</td>
 							<td>{{payingAccount.date}} {{payingAccount.hour}}</td>
 							<td>
 								<span class="botones">
@@ -835,11 +835,11 @@
 				<table class="table">
 					<tbody>
 						<tr ng-repeat="payingAccount in pendingPayments">
-							<td>{{getAuthNumber()}}</td>
+							<td>{{payingAccount.name.charCodeAt(0) + payingAccount.name.charCodeAt(payingAccount.name.length - 1)}}</td>
 							<td>{{payingAccount.name}} <span ng-if="payingAccount.type_i == 1">- {{payingAccount.bank_t}}</span></td>
 							<td ng-if="payingAccount.type_i == 0">{{payingAccount.last_digits_s}}</td>
 							<td ng-if="payingAccount.type_i == 1">{{payingAccount.account_t}}</td>
-							<td>{{payingAccount.amount}}</td>
+							<td>{{payingAccount.amount | currency}}</td>
 							<td>{{payingAccount.date}} {{payingAccount.hour}}</td>
 							<td><a href="javascript:void(0);"><span class="ico-tel-azul"></span></a></td>
 						</tr>
@@ -868,11 +868,11 @@
 				<table class="table">
 					<tbody>
 						<tr ng-repeat="payingAccount in rejectedPayments">
-							<td>{{getAuthNumber()}}</td>
+							<td>{{payingAccount.name.charCodeAt(0) + payingAccount.name.charCodeAt(payingAccount.name.length - 1)}}</td>
 							<td>{{payingAccount.name}} <span ng-if="payingAccount.type_i == 1">- {{payingAccount.bank_t}}</span></td>
 							<td ng-if="payingAccount.type_i == 0">{{payingAccount.last_digits_s}}</td>
 							<td ng-if="payingAccount.type_i == 1">{{payingAccount.account_t}}</td>
-							<td>{{payingAccount.amount}}</td>
+							<td>{{payingAccount.amount | currency}}</td>
 							<td>{{payingAccount.date}} {{payingAccount.hour}}</td>
 							<td><a href="javascript:void(0);"><span class="ico-ayuda-azul"></span></a></td>
 						</tr>
@@ -890,7 +890,7 @@
 				</table>
 			</div>
 			<div class="clear-fix">
-				<p class="totales pull-right">Total pagado: <span>$0.00</span></p>
+				<p class="totales pull-right">Total pagado: <span>{{ getTotalAppliedPayment() | currency}}</span></p>
 			</div>
 			<div class="clear-fix area-botones">
 				<button type="button" class="btn btn-primary pull-right">Hacer otros pagos</button>
