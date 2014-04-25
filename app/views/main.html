@@ -100,7 +100,11 @@
 			</div>
 
 			<div class="list-cuentas" ng-show="thirdTab">
-				<input ng-model="searchThirdAccounts" type="search" class="form-control" placeholder="Buscar en otras cuentas" />
+				<div class="clear-fix">
+					<input ng-model="searchThirdAccounts" type="search" class="form-control pull-left" placeholder="Buscar en otras cuentas" />
+					<button class="btn btn-default btn-beneficiario pull-right" type="button" ng-click="addingBeneficiary=true; accountSelection=false; benef = {}">+</button>	
+				</div>
+				
 				<!-- <div class="search-result">
 					<span class="pull-right">{{numThirdAccounts}} cuentas</span>
 				</div> -->
@@ -142,12 +146,12 @@
 					</div>
 				</div>
 				<h4 class="titulo-beneficiario">
-					Nuevo beneficiario 1/3
+					Beneficiario 1/3
 					<button class="btn btn-default btn-add pull-right" type="submit">+</button>
 				</h4>
 				<div class="content-benef">
 					<form role="form">
-						<div class="checkbox">
+						<div>
 							<label>
 								<input type="checkbox" ng-model="paymentOrder" ng-model="benef.paymentOrder"> Orden de pago
 							</label>
@@ -707,7 +711,7 @@
 								</div>
 								<div class="checkbox clear-fix">
 									<label class="pull-right">
-										<input ng-model="payingAccount.recurring" type="checkbox"> <strong>PAGO RECURRENTE</strong>
+										<input ng-model="payingAccount.recurring" type="checkbox"> <strong>AUTORIZACI&Oacte;N REMOTA</strong>
 									</label>
 								</div>
 							</td>

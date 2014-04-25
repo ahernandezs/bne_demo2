@@ -605,7 +605,12 @@ header{
 				}
 			}
 			.content-benef{
+				font-size: 12px; 
 				padding:0 10px 10px 10px;
+				label{
+					font-weight: normal;
+					padding-bottom:10px;
+				}
 				input[type="text"],
 				input[type="email"],
 				input[type="password"],
