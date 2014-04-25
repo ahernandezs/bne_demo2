@@ -386,7 +386,8 @@ header{
 	padding:10px;
 	@include border_radius(5px);
 	p{
-		padding-top: 3px;
+		padding-top: 2px;
+		font-size: 12px;
 	}
 	.input-group{
 		.input-group-addon{
@@ -571,17 +572,62 @@ header{
 		}
 		.beneficiario{
 			border-bottom: 1px solid #e9e9e9;
-			padding: 10px 5px;
 			overflow: hidden;
-			.btn-beneficiario, 
-			.btn-beneficiario:hover{
+			.benef-header {
+				background: #1b85d1;
+				color: #FFFFFF;
+				padding: 20px 10px;
+			}
+			.net-key{
+				margin: 10px;
+				.input-group{
+					margin: 5px 0;
+				}
+			}
+			.titulo-beneficiario{
+				font-weight: bold;
+				font-size: 12px;
+				border-bottom: 1px solid #cccccc;
+				padding: 10px;
+				clear: both;
+				overflow: hidden;
+				.btn-add, 
+				.btn-add:hover{
+					text-align: center;
+					background: transparent;
+					border:1px solid #1b85d1;
+					color: #1b85d1;
+					font-size: 14px;
+					line-height: 14px;
+					padding: 1px 5px 5px 5px;
+					margin: 0 5px 10px 0;
+					height: 20px;
+				}
+			}
+			.content-benef{
+				padding:0 10px 10px 10px;
+				input[type="text"],
+				input[type="email"],
+				input[type="password"],
+				input[type="tel"]{
+					width: 100%;
+				}
+				.row{
+					padding-top: 5px;
+					font-size: 12px; 
+				}
+			}
+			.btn-close, 
+			.btn-close:hover{
 				text-align: center;
-				background: #FFFFFF;
-				border:1px solid #1b85d1;
-				color: #1b85d1;
-				font-size: 22px;
-				padding: 0 10px;
+				background: transparent;
+				border:1px solid #FFFFFF;
+				color: #FFFFFF;
+				font-size: 14px;
+				line-height: 14px;
+				padding: 1px 5px 5px 5px;
 				margin: 0 5px 10px 0;
+				height: 20px;
 			}
 		}
 	}
@@ -591,6 +637,7 @@ header{
 .tarjeta-clasica{
 	background: url(/images/tarjeta_clasica.png) no-repeat;
 }
+
 
 // .container {
 // 	padding-right: 15px;
@@ -627,11 +674,7 @@ header{
 // 	background-color: #FFECCC;
 // 	padding: 20px;
 // }
-// .benef-header {
-// 	background-color: #2B8EC3;
-// 	color: white;
-// 	padding: 10px;
-// }
+
 // .benef-added {
 // 	background-color: #E1F0D2;
 // 	padding: 10px;

@@ -120,12 +120,13 @@
 		<div class="col-md-3 sidebar" ng-show="addingBeneficiary">
 			<div class="beneficiario">
 				<div class="benef-header">
-					<strong>Nuevo beneficiario</strong>
-					<button class="btn btn-default btn-beneficiario pull-right" type="submit" ng-click="addingBeneficiary=false; accountSelection=true;">X</button>	
+					<strong>Nuevo Beneficiario</strong>
+					<button class="btn btn-default btn-close pull-right" type="submit" ng-click="addingBeneficiary=false; accountSelection=true;">
+						x
+					</button>	
 				</div>
-
 				<div class="net-key clear-fix" ng-show="challengeBeneficiary">
-					<p>Ingresa manualmente tu clave din&aacute;mica</p>
+					<p><span class="ico-ayuda-blanco"></span> Ingresa manualmente tu clave din&aacute;mica</p>
 					<div class="row">
 						<div class="col-md-12">
 							<div class="input-group">
@@ -140,119 +141,131 @@
 						</div>
 					</div>
 				</div>
-
-				<form role="form">
-					<div class="checkbox">
-						<label>
-							<input type="checkbox" ng-model="paymentOrder" ng-model="benef.paymentOrder"> Orden de pago
-						</label>
-					</div>
-
-					<div class="form-group">
-						<input type="text" class="form-control" placeholder="Nombre / Alias" ng-model="benef.name"/>
-					</div>
-
-					<div class="form-group">
-						<input type="email" class="form-control" placeholder="Correo electrónico" ng-model="benef.email"/>
-					</div>
-
-					<div ng-show="!paymentOrder">
-						<div class="form-group">
-							<input type="text" class="form-control" placeholder="Clabe | Tarjeta | Celular" ng-model="benef.account_s"/>
+				<h4 class="titulo-beneficiario">
+					Nuevo beneficiario 1/3
+					<button class="btn btn-default btn-add pull-right" type="submit">+</button>
+				</h4>
+				<div class="content-benef">
+					<form role="form">
+						<div class="checkbox">
+							<label>
+								<input type="checkbox" ng-model="paymentOrder" ng-model="benef.paymentOrder"> Orden de pago
+							</label>
 						</div>
-					</div>
 
-					<div ng-show="paymentOrder">
 						<div class="form-group">
-							<input type="text" class="form-control" placeholder="Sector económico" ng-model="benef.sector"/>
+							<input type="text" class="form-control" placeholder="Nombre / Alias" ng-model="benef.name"/>
 						</div>
+
 						<div class="form-group">
-							<div class="row">
-								<div class="col-md-6">
-									<div class="checkbox">
-										<label>
-											<input type="radio" name="personType" ng-model="benef.personType" value="person"> Física
-										</label>
+							<input type="email" class="form-control" placeholder="Correo electrónico" ng-model="benef.email"/>
+						</div>
+
+						<div ng-show="!paymentOrder">
+							<div class="form-group">
+								<input type="text" class="form-control" placeholder="Clabe | Tarjeta | Celular" ng-model="benef.account_s"/>
+							</div>
+						</div>
+
+						<div ng-show="paymentOrder">
+							<div class="form-group">
+								<input type="text" class="form-control" placeholder="Sector económico" ng-model="benef.sector"/>
+							</div>
+							<div class="form-group">
+								<div class="row">
+									<div class="col-md-6">
+										<div class="checkbox">
+											<label>
+												<input type="radio" name="personType" ng-model="benef.personType" value="person"> Física
+											</label>
+										</div>
 									</div>
-								</div>
-								<div class="col-md-6">
-									<div class="checkbox">
-										<label>
-											<input type="radio" name="personType" ng-model="benef.personType" value="company"> Moral
-										</label>
+									<div class="col-md-6">
+										<div class="checkbox">
+											<label>
+												<input type="radio" name="personType" ng-model="benef.personType" value="company"> Moral
+											</label>
+										</div>
 									</div>
 								</div>
 							</div>
 						</div>
-					</div>
-					<div class="form-group">
-						<input type="text" class="form-control" placeholder="Importe máximo" ng-model="benef.max_amount"/>
-					</div>
-					<div class="form-group">
-						<input type="text" class="form-control" placeholder="Teléfono celular" ng-model="benef.cellphone"/>
-					</div>
-					<button ng-click="inputChallngBenef = ''; challengeBeneficiary = true" type="submit" class="btn btn-primary pull-right">Aceptar</button>
-				</form>
+						<div class="form-group">
+							<input type="text" class="form-control" placeholder="Importe máximo" ng-model="benef.max_amount"/>
+						</div>
+						<div class="form-group">
+							<input type="text" class="form-control" placeholder="Teléfono celular" ng-model="benef.cellphone"/>
+						</div>
+						<div class="clear-fix">
+							<button ng-click="inputChallngBenef = ''; challengeBeneficiary = true" type="submit" class="btn btn-primary pull-right">
+								Aceptar
+							</button>
+						</div>
+					</form>
+				</div>
 			</div>
 		</div>
 		<div class="col-md-3 sidebar" ng-show="addedBeneficiary">
 			<div class="beneficiario">
 				<div class="benef-header">
 					<strong>Beneficiario dado de alta</strong>
-					<button class="btn btn-default btn-beneficiario pull-right" type="submit" ng-click="addedBeneficiary=false; accountSelection=true;">X</button>	
+					<button class="btn btn-default btn-close pull-right" type="submit" ng-click="addedBeneficiary=false; accountSelection=true;">
+						x
+					</button>	
 				</div>
-
-				<div class="benef-added">
-					<div class="row">
-						<div class="col-md-12">
-							Nombre: {{benef.name}}
-						</div>
-					</div>
-
-					<div class="row">
-						<div class="col-md-12">
-							Alias: {{benef.alias}}
-						</div>
-					</div>
-
-					<div ng-show="benef.sector">
+				<div class="content-benef">
+					<div class="benef-added">
 						<div class="row">
 							<div class="col-md-12">
-								Cuenta: {{benef.account_s}}
-							</div>
-						</div>
-					</div>
-
-					<div ng-show="benef.sector">
-						<div class="row">
-							<div class="col-md-12">
-								Sector: {{benef.sector}}
+								<strong>Nombre:</strong> {{benef.name}}
 							</div>
 						</div>
 
 						<div class="row">
 							<div class="col-md-12">
-								<span ng-show="benef.personType == 'person'">F&iacute;sica</span>
-								<span ng-show="benef.personType == 'company'">Moral</span>
+								<strong>Alias:</strong> {{benef.alias}}
 							</div>
 						</div>
-					</div>
 
-					<div class="row">
-						<div class="col-md-12">
-							Importe m&aacute;ximo: {{benef.max_amount}}
+						<div ng-show="benef.sector">
+							<div class="row">
+								<div class="col-md-12">
+									<strong>Cuenta:</strong> {{benef.account_s}}
+								</div>
+							</div>
 						</div>
-					</div>
 
-					<div class="row">
-						<div class="col-md-12">
-							Correo electr&oacute;nico: {{benef.email}}
+						<div ng-show="benef.sector">
+							<div class="row">
+								<div class="col-md-12">
+									<strong>Sector:</strong> {{benef.sector}}
+								</div>
+							</div>
+
+							<div class="row">
+								<div class="col-md-12">
+									<span ng-show="benef.personType == 'person'">F&iacute;sica</span>
+									<span ng-show="benef.personType == 'company'">Moral</span>
+								</div>
+							</div>
 						</div>
-					</div>
 
-					<div class="row">
-						<div class="col-md-12">
-							Tel&eacute;fono celular: {{benef.cellphone}}
+						<div class="row">
+							<div class="col-md-12">
+								<strong>Importe m&aacute;ximo:</strong> {{benef.max_amount}}
+							</div>
+						</div>
+
+						<div class="row">
+							<div class="col-md-12">
+								<strong>Correo electr&oacute;nico:</strong> {{benef.email}}
+							</div>
+						</div>
+
+						<div class="row">
+							<div class="col-md-12">
+								<strong>Tel&eacute;fono celular:</strong> {{benef.cellphone}}
+							</div>
 						</div>
 					</div>
 				</div>
