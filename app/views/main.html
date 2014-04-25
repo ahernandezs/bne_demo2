@@ -48,7 +48,7 @@
 				<label for="origin-search" class="control-label pull-left">Cuenta origen:</label>
 				<div class="pull-right col-md-10 tarjeta tarjeta-clasica">
 					<angucomplete class="col-md-12" id="origin-account"
-						placeholder="Buscar cuenta origen"
+						placeholder="Cta. Maestra/***9012/ MXN $1,000,050.00"
 						pause="20"
 						selectedobject="originAccount"
 						url="http://projects.anzen.com.mx:4567/api/accounts?query="
@@ -92,24 +92,24 @@
 					<div infinite-scroll="loadMorePersonalAccounts()" infinite-scroll-disabled="busyPersonalAccounts" infinite-scroll-distance="0" infinite-scroll-immediate-check="false" infinite-scroll-parent="true">
 						<div ng-repeat="account in targetPersonalAccounts">
 							<div class="account-item" ng-click="selectPersonalAccount(account)">
-								{{account.name}}
+								<span class="ico-cta-banamex"></span> {{account.name}}
 							</div>
 						</div>
 					</div>
 				</div>
 			</div>
 
-			<div ng-show="thirdTab">
+			<div class="list-cuentas" ng-show="thirdTab">
 				<input ng-model="searchThirdAccounts" type="search" class="form-control" placeholder="Buscar en otras cuentas" />
-				<div class="search-result">
+				<!-- <div class="search-result">
 					<span class="pull-right">{{numThirdAccounts}} cuentas</span>
-				</div>
+				</div> -->
 				<div class="account-list">
 					<div infinite-scroll="loadMoreThirdAccounts()" infinite-scroll-disabled="busyPersonalAccounts" infinite-scroll-distance="0" infinite-scroll-immediate-check="false" infinite-scroll-parent="true">
 						<div ng-repeat="account in targetThirdAccounts">
 							<div class="account-item" ng-click="selectThirdAccount(account)">
-								{{account.name}}
-								<h6>{{account.bank_t}} {{account.account_t}}</h6>
+								<span class="ico-cta-banamex"></span> {{account.name}}
+								<!-- <h6>{{account.bank_t}} {{account.account_t}}</h6> -->
 							</div>
 						</div>
 					</div>
@@ -270,13 +270,14 @@
 								{{pending.length}}
 							</span>
 							<button class="btn btn-table pull-right">
-								<span class="glyphicon glyphicon-ok"></span> Autorizar
+								<span class="ico-check-blanco"></span> Autorizar
 							</button>
 						</div>
 						
 						<table class="table">
 							<tbody>
 								<tr ng-repeat="txn in pending">
+									<td><input type="checkbox" /></td>
 									<td>
 										{{txn.target_name_t}}<br>
 										<strong>{{txn.target_bank_t}}</strong>
@@ -286,13 +287,16 @@
 										
 									</td>
 									<td>{{txn.date_dt | date:'dd/MM/yyyy'}}</td>
+									<td><span class="ico-tel-azul"></span></td>
 								</tr>
 							</tbody>
 							<thead>
 								<tr>
+									<td><input type="checkbox" /></td>
 									<td>Cuenta destino</td>
 									<td>Monto</td>
 									<td>Fecha</td>
+									<td></td>
 								</tr>
 							</thead>
 						</table>
@@ -306,10 +310,14 @@
 							<span class="badge red pull-left">
 							  {{rejected.length}}
 							</span>
+							<button class="btn btn-table pull-right">
+								<span class="ico-reintentar-blanco"></span> Reintentar
+							</button>
 						</div>
 						<table class="table">
 							<tbody>
 								<tr ng-repeat="txn in rejected">
+									<td><input type="checkbox" /></td>
 									<td>
 										{{txn.target_name_t}}<br>
 										<strong>{{txn.target_bank_t}} {{txn.target_account_t}}</strong>
@@ -318,13 +326,16 @@
 										{{txn.amount_d | currency}}
 									</td>
 									<td>{{txn.date_dt | date:'dd/MM/yyyy'}}</td>
+									<td><span class="ico-ayuda-azul"></span></td>
 								</tr>
 							</tbody>
 							<thead>
 								<tr>
+									<td><input type="checkbox" /></td>
 									<td>Cuenta destino</td>
 									<td>Monto</td>
 									<td>Fecha</td>
+									<td></td>
 								</tr>
 							</thead>
 						</table>
@@ -334,6 +345,217 @@
 			</div>
 
 			<div class="row">
+				<div class="col-md-12">
+				<div class="contenedor-tabla">
+					<div class="head-contenedor">
+						<h4 class="pull-left">&Uacute;ltimos pagos</h4>
+						<button class="btn btn-table pull-right">
+							<span class="ico-refresh-blanco"></span> Reutilizar pagos
+						</button>
+					</div>
+					<table class="table valignC">
+						<tbody>
+							<tr>
+								<td><input type="checkbox" /></td>
+								<td><input type="text" class="form-control fecha" value="30/04/2014" /></td>
+								<td>
+									<select class="form-control">
+										<option>Cta. Maestra/***9012/MXN</option>
+									</select>
+								</td>
+								<td>Telmex Casa</td>
+								<td><input type="text" class="form-control monto" value="$ 350.00" /></td>
+								<td>12 Marzo 2014</td>
+							</tr>
+							<tr>
+								<td><input type="checkbox" /></td>
+								<td><input type="text" class="form-control fecha" value="30/04/2014" /></td>
+								<td>
+									<select class="form-control">
+										<option>Cta. Maestra/***9012/MXN</option>
+									</select>
+								</td>
+								<td>Telmex Casa</td>
+								<td><input type="text" class="form-control monto" value="$ 350.00" /></td>
+								<td>12 Marzo 2014</td>
+							</tr>
+							<tr>
+								<td><input type="checkbox" /></td>
+								<td><input type="text" class="form-control fecha" value="30/04/2014" /></td>
+								<td>
+									<select class="form-control">
+										<option>Cta. Maestra/***9012/MXN</option>
+									</select>
+								</td>
+								<td>Telmex Casa</td>
+								<td><input type="text" class="form-control monto" value="$ 350.00" /></td>
+								<td>12 Marzo 2014</td>
+							</tr>
+							<tr>
+								<td><input type="checkbox" /></td>
+								<td><input type="text" class="form-control fecha" value="30/04/2014" /></td>
+								<td>
+									<select class="form-control">
+										<option>Cta. Maestra/***9012/MXN</option>
+									</select>
+								</td>
+								<td>Telmex Casa</td>
+								<td><input type="text" class="form-control monto" value="$ 350.00" /></td>
+								<td>12 Marzo 2014</td>
+							</tr>
+							<tr>
+								<td><input type="checkbox" /></td>
+								<td><input type="text" class="form-control fecha" value="30/04/2014" /></td>
+								<td>
+									<select class="form-control">
+										<option>Cta. Maestra/***9012/MXN</option>
+									</select>
+								</td>
+								<td>Telmex Casa</td>
+								<td><input type="text" class="form-control monto" value="$ 350.00" /></td>
+								<td>12 Marzo 2014</td>
+							</tr>
+							<tr>
+								<td><input type="checkbox" /></td>
+								<td><input type="text" class="form-control fecha" value="30/04/2014" /></td>
+								<td>
+									<select class="form-control">
+										<option>Cta. Maestra/***9012/MXN</option>
+									</select>
+								</td>
+								<td>Telmex Casa</td>
+								<td><input type="text" class="form-control monto" value="$ 350.00" /></td>
+								<td>12 Marzo 2014</td>
+							</tr>
+							<tr>
+								<td><input type="checkbox" /></td>
+								<td><input type="text" class="form-control fecha" value="30/04/2014" /></td>
+								<td>
+									<select class="form-control">
+										<option>Cta. Maestra/***9012/MXN</option>
+									</select>
+								</td>
+								<td>Telmex Casa</td>
+								<td><input type="text" class="form-control monto" value="$ 350.00" /></td>
+								<td>12 Marzo 2014</td>
+							</tr>
+							<tr>
+								<td><input type="checkbox" /></td>
+								<td><input type="text" class="form-control fecha" value="30/04/2014" /></td>
+								<td>
+									<select class="form-control">
+										<option>Cta. Maestra/***9012/MXN</option>
+									</select>
+								</td>
+								<td>Telmex Casa</td>
+								<td><input type="text" class="form-control monto" value="$ 350.00" /></td>
+								<td>12 Marzo 2014</td>
+							</tr>
+							<tr>
+								<td><input type="checkbox" /></td>
+								<td><input type="text" class="form-control fecha" value="30/04/2014" /></td>
+								<td>
+									<select class="form-control">
+										<option>Cta. Maestra/***9012/MXN</option>
+									</select>
+								</td>
+								<td>Telmex Casa</td>
+								<td><input type="text" class="form-control monto" value="$ 350.00" /></td>
+								<td>12 Marzo 2014</td>
+							</tr>
+							<tr>
+								<td><input type="checkbox" /></td>
+								<td><input type="text" class="form-control fecha" value="30/04/2014" /></td>
+								<td>
+									<select class="form-control">
+										<option>Cta. Maestra/***9012/MXN</option>
+									</select>
+								</td>
+								<td>Telmex Casa</td>
+								<td><input type="text" class="form-control monto" value="$ 350.00" /></td>
+								<td>12 Marzo 2014</td>
+							</tr>
+							<tr>
+								<td><input type="checkbox" /></td>
+								<td><input type="text" class="form-control fecha" value="30/04/2014" /></td>
+								<td>
+									<select class="form-control">
+										<option>Cta. Maestra/***9012/MXN</option>
+									</select>
+								</td>
+								<td>Telmex Casa</td>
+								<td><input type="text" class="form-control monto" value="$ 350.00" /></td>
+								<td>12 Marzo 2014</td>
+							</tr>
+							<tr>
+								<td><input type="checkbox" /></td>
+								<td><input type="text" class="form-control fecha" value="30/04/2014" /></td>
+								<td>
+									<select class="form-control">
+										<option>Cta. Maestra/***9012/MXN</option>
+									</select>
+								</td>
+								<td>Telmex Casa</td>
+								<td><input type="text" class="form-control monto" value="$ 350.00" /></td>
+								<td>12 Marzo 2014</td>
+							</tr>
+							<tr>
+								<td><input type="checkbox" /></td>
+								<td><input type="text" class="form-control fecha" value="30/04/2014" /></td>
+								<td>
+									<select class="form-control">
+										<option>Cta. Maestra/***9012/MXN</option>
+									</select>
+								</td>
+								<td>Telmex Casa</td>
+								<td><input type="text" class="form-control monto" value="$ 350.00" /></td>
+								<td>12 Marzo 2014</td>
+							</tr>
+							<tr>
+								<td><input type="checkbox" /></td>
+								<td><input type="text" class="form-control fecha" value="30/04/2014" /></td>
+								<td>
+									<select class="form-control">
+										<option>Cta. Maestra/***9012/MXN</option>
+									</select>
+								</td>
+								<td>Telmex Casa</td>
+								<td><input type="text" class="form-control monto" value="$ 350.00" /></td>
+								<td>12 Marzo 2014</td>
+							</tr>
+							<tr>
+								<td><input type="checkbox" /></td>
+								<td><input type="text" class="form-control fecha" value="30/04/2014" /></td>
+								<td>
+									<select class="form-control">
+										<option>Cuenta Origen</option>
+									</select>
+								</td>
+								<td>
+									<select class="form-control">
+										<option>Cuenta Destino</option>
+									</select>
+								</td>
+								<td><input type="text" class="form-control monto" /></td>
+								<td></td>
+							</tr>
+						</tbody>
+						<thead>
+							<tr>
+								<td></td>
+								<td>Fecha</td>
+								<td>Cuenta Origen</td>
+								<td>Cuenta Destino</td>
+								<td>Monto</td>
+								<td>&Uacute;ltimo pago</td>
+							</tr>
+						</thead>
+					</table>
+				</div>
+			  </div>
+			</div>
+
+			<!-- <div class="row">
 				<div class="col-md-12">
 				<div class="contenedor-tabla">
 					<div class="head-contenedor">
@@ -375,9 +597,9 @@
 					</table>
 				</div>
 			  </div>
-			</div>
+			</div> -->
 
-			<div class="row">
+			<!-- <div class="row">
 				<div class="col-md-12">
 					<div class="contenedor-tabla">
 						<div class="head-contenedor">
@@ -416,7 +638,7 @@
 						</table>
 					</div>
 				</div>
-			</div>
+			</div> -->
 		</div>
 
 		<div class="col-md-9 main" ng-show="paymentConfirmation">
