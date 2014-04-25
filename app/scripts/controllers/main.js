@@ -208,6 +208,7 @@ angular.module('bnePaymentsFrontApp')
     $scope.selectPersonalAccount = function(account) {
       if(account) {
         if($scope.getPayingAccountIndex(account.id) === -1) {
+          account.date = $scope.getCurrentDateString();
           account.hourSelection = $scope.hoursCombo[0];
           $scope.payingAccounts.push(account);
           $scope.dashboard = false;
@@ -227,6 +228,7 @@ angular.module('bnePaymentsFrontApp')
     $scope.selectThirdAccount = function(account) {
       if(account) {
         if($scope.getPayingAccountIndex(account.id) === -1) {
+          account.date = $scope.getCurrentDateString();
           account.hourSelection = $scope.hoursCombo[0];
           $scope.payingAccounts.push(account);
           $scope.dashboard = false;
@@ -328,5 +330,24 @@ angular.module('bnePaymentsFrontApp')
 
     $scope.getCurrentDate = function () {
       return Date.now();
+    };
+
+    $scope.getCurrentDateString = function () {
+      var today = new Date();
+      var dd = today.getDate();
+      var mm = today.getMonth()+1; //January is 0!
+      var yyyy = today.getFullYear();
+
+      if(dd<10) {
+            dd='0'+dd
+      }
+
+      if(mm<10) {
+            mm='0'+mm
+      }
+
+      today = dd+'/'+mm+'/'+yyyy;
+
+      return today;
     };
   }]);
