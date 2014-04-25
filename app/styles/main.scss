@@ -70,7 +70,7 @@ $icon-font-path: "/bower_components/sass-bootstrap/fonts/";
 	behavior: url(PIE.htc);
 }
 body{
-	background: #f9f9f9;
+	background: #FFFFFF;
 }
 a{
 	color: #1b85d1;
@@ -173,6 +173,38 @@ input[type="text"].monto{
 	top:2px;
 	margin-right:5px;	
 }
+.ico-print-azul{
+	background: url(/images/ico-print-azul.png) no-repeat;
+	background-size:20px;
+	width:20px;
+	height:20px;
+	display: inline-block;
+	position: relative;
+	top:2px;
+	margin-right:5px;	
+}
+.ico-mail-azul{
+	background: url(/images/ico-mail-azul.png) no-repeat;
+	background-size:20px;
+	width:20px;
+	height:15px;
+	display: inline-block;
+	position: relative;
+	top:2px;
+	margin-right:5px;	
+	margin-left:5px;	
+}
+.ico-ayuda-blanco{
+	background: url(/images/ico-ayuda-blanco.png) no-repeat;
+	background-size:22px;
+	width:22px;
+	height:22px;
+	display: inline-block;
+	position: relative;
+	top:5px;
+	margin-left:5px;	
+	margin-right:5px;	
+}
 .ico-cta-banamex{
 	background: url(/images/ico-cta-banamex.png) no-repeat;
 	background-size:20px;
@@ -180,7 +212,7 @@ input[type="text"].monto{
 	height:20px;
 	display: inline-block;
 	position: relative;
-	top:2px;
+	top:5px;
 	margin-right:5px;	
 }
 
@@ -247,6 +279,10 @@ header{
 .title{
 	font-weight:normal;
 	font-size:24px;
+	.botones{
+		color: #1b85d1;
+		font-size: 14px;
+	}
 }
 .contenedor-tabla{
 	@include border_radius(5px);
@@ -321,8 +357,17 @@ header{
 				border-bottom:none;
 			}
 			.btn-close{
+				@include border_radius(3px);
 				color: #FFFFFF;
+				font-size: 14px;
+				line-height: 14px;
+				height: 20px;
+				padding:1px 5px 5px 5px;
 			}
+		}
+		.botones{
+			color: #1b85d1;
+			font-size: 14px;
 		}
 	}
 	table.valignC{
@@ -340,9 +385,10 @@ header{
 	overflow:hidden;
 	padding:10px;
 	@include border_radius(5px);
+	p{
+		padding-top: 3px;
+	}
 	.input-group{
-		margin-top: 5px;
-		margin-bottom: 5px;
 		.input-group-addon{
 			background: #4ca3e6;
 			color: #FFFFFF;
@@ -365,8 +411,40 @@ header{
 			-moz-border-bottom-left-radius: 0 !important;
 		}
 	}
-	
+	.btn-close{
+		color: #d9ccc6;
+		text-decoration: none;
+		font-size: 18px;
+		display: inline-block;
+		margin: 5px 10px 0 20px;
+		font-weight: normal;
+	}	
 }
+.totales{
+	font-weight:bold;
+	font-size: 14px;
+	padding-top:10px;
+	text-transform:uppercase;
+	span{
+		display: inline-block;
+		padding-left: 30px;
+	}
+}
+.area-botones{
+	border-top: 1px solid #cacaca;
+	margin-top:15px;
+	padding: 15px 0;
+	.regresar,
+	.regresar:hover{
+		background: url(/images/ico-arrow-left-azul.png) 0 5px no-repeat;
+		display: inline-block;
+		padding-left:16px;
+		margin: 8px 20px 0 20px;
+		font-size: 14px;
+		text-decoration: none;
+	}
+}
+
 .head-pagos{
 	z-index: 999;
 	position: fixed;
@@ -466,9 +544,12 @@ header{
 				background: #FFFFFF;
 				border:1px solid #1b85d1;
 				color: #1b85d1;
-				font-size: 22px;
-				padding: 0 10px;
-				margin: 10px 5px 0 0;
+				font-size: 18px;
+				line-height: 18px;
+				padding: 0 5px 3px 5px;
+				margin: 15px 10px 0 0;
+				height: 22px;
+				vertical-align: top;
 			}
 			.account-list{
 				border-top: 1px solid #eeeeee;

@@ -83,7 +83,7 @@
 			<div class="list-cuentas" ng-show="personalTab">
 				<div class="clear-fix">
 					<input ng-model="searchPersonalAccounts" type="search" class="form-control pull-left" placeholder="Celular / Alias / CLABE / Cuenta" />
-					<button class="btn btn-default btn-beneficiario pull-right" type="submit" ng-click="addingBeneficiary=true; accountSelection=false; benef = {}">+</button>	
+					<button class="btn btn-default btn-beneficiario pull-right" type="button" ng-click="addingBeneficiary=true; accountSelection=false; benef = {}">+</button>	
 				</div>
 				<!-- <div class="search-result">
 					<span class="pull-right">{{numPersonalAccounts}} cuentas</span>
@@ -287,7 +287,7 @@
 										
 									</td>
 									<td>{{txn.date_dt | date:'dd/MM/yyyy'}}</td>
-									<td><span class="ico-tel-azul"></span></td>
+									<td><a href="javascript:void(0);"><span class="ico-tel-azul"></span></a></td>
 								</tr>
 							</tbody>
 							<thead>
@@ -326,7 +326,7 @@
 										{{txn.amount_d | currency}}
 									</td>
 									<td>{{txn.date_dt | date:'dd/MM/yyyy'}}</td>
-									<td><span class="ico-ayuda-azul"></span></td>
+									<td><a href="javascript:void(0);"><span class="ico-ayuda-azul"></span></a></td>
 								</tr>
 							</tbody>
 							<thead>
@@ -644,7 +644,8 @@
 		<div class="col-md-9 main" ng-show="paymentConfirmation">
 			<h1 class="title">Pagos</h1>
 			<div class="net-key" ng-show="challenge">
-				<p class="pull-left">Ingresa manualmente tu clave din&aacute;mica</p>
+				<p class="pull-left"><span class="ico-ayuda-blanco"></span> Ingresa manualmente tu clave din&aacute;mica</p>
+				<a href="javascript:void(0);" class="btn-close pull-right">x</a>
 				<button ng-click="processPayment()" type="button" class="btn btn-primary pull-right">Confirmar</button>
 				<div class="input-group col-md-4 pull-right">
 					<span class="input-group-addon">23456789</span>
@@ -656,9 +657,6 @@
 			<div class="contenedor-tabla">
 				<div class="head-contenedor">
 					<h4 class="pull-left">Pago a cuentas</h4>
-					<button class="btn btn-table pull-right">
-						<span class="glyphicon glyphicon glyphicon-unchecked"></span> Autorizaci&oacute;n remota
-					</button>
 				</div>
 				<table class="table">
 					<tbody>
@@ -685,10 +683,14 @@
 										placeholder="30/04/2014"/>
 								</div>
 								<div class="col-md-6">
-									<input ng-model="payingAccount.hour" type="text" class="form-control pull-left col-md-3" 
+									<select class="form-control">
+										<option>Ahora</option>
+										<option>8:00</option>
+									</select>
+									<!-- <input ng-model="payingAccount.hour" type="text" class="form-control pull-left col-md-3" 
 										name="" 
 										value="" 
-										placeholder="15:55"/>
+										placeholder="15:55"/> -->
 								</div>
 								<div class="checkbox clear-fix">
 									<label class="pull-right">
@@ -697,7 +699,7 @@
 								</div>
 							</td>
 							<td>
-								<button class="btn btn-close" ng-click="removePayingAccount(payingAccount.id)">X</button>
+								<button class="btn btn-close" ng-click="removePayingAccount(payingAccount.id)">x</button>
 							</td>
 						</tr>
 					</tbody>
@@ -713,6 +715,9 @@
 				</table>
 			</div>
 			<div class="clear-fix">
+				<p class="totales pull-right">Total a pagar: <span>$0.00</span></p>
+			</div>
+			<div class="clear-fix area-botones">
 				<button ng-click="inputChallngPayment = ''; challenge=true" type="submit" class="btn btn-primary pull-right">Pagar</button>
 			</div>
 
@@ -767,13 +772,35 @@
 		</div>
 
 		<div class="col-md-9 main" ng-show="paymentApplied">
-			<h1 class="title">Pago aplicado</h1>
-      <div class="contenedor-tabla" ng-show="appliedPayments.length > 0">
+			<h1 class="title">
+				Pago aplicado
+				<span class="botones pull-right">
+					<a href="javascript:void(0);"><span class="ico-print-azul"></span></a> /
+					<a href="javascript:void(0);"><span class="ico-mail-azul"></span></a>
+				</span>
+			</h1>
+			<div class="contenedor-tabla" ng-show="appliedPayments.length > 0">
 				<div class="head-contenedor">
 					<h4 class="pull-left">Pago Aplicado</h4>
 					<span class="badge green pull-left"></span>
 				</div>
 				<table class="table">
+					<tbody>
+						<tr ng-repeat="payingAccount in appliedPayments">
+							<td>{{getAuthNumber()}}</td>
+							<td>{{payingAccount.name}} <span ng-if="payingAccount.type_i == 1">- {{payingAccount.bank_t}}</span></td>
+							<td ng-if="payingAccount.type_i == 0">{{payingAccount.last_digits_s}}</td>
+							<td ng-if="payingAccount.type_i == 1">{{payingAccount.account_t}}</td>
+							<td>{{payingAccount.amount}}</td>
+							<td>{{payingAccount.date}} {{payingAccount.hour}}</td>
+							<td>
+								<span class="botones">
+									<a href="javascript:void(0);"><span class="ico-print-azul"></span></a> /
+									<a href="javascript:void(0);"><span class="ico-mail-azul"></span></a>
+								</span>
+							</td>
+						</tr>
+					</tbody>
 					<thead>
 						<tr>
 							<td>N&uacute;mero de autorizaci&oacute;n</td>
@@ -781,25 +808,29 @@
 							<td>Cuenta Destino</td>
 							<td>Monto</td>
 							<td>Fecha y Hora de Aplicaci&oacute;n</td>
+							<td></td>
 						</tr>
 					</thead>
-          <tr ng-repeat="payingAccount in appliedPayments">
-            <td>{{getAuthNumber()}}</td>
-            <td>{{payingAccount.name}} <span ng-if="payingAccount.type_i == 1">- {{payingAccount.bank_t}}</span></td>
-            <td ng-if="payingAccount.type_i == 0">{{payingAccount.last_digits_s}}</td>
-            <td ng-if="payingAccount.type_i == 1">{{payingAccount.account_t}}</td>
-            <td>{{payingAccount.amount}}</td>
-            <td>{{payingAccount.date}} {{payingAccount.hour}}</td>
-          </tr>
 				</table>
 			</div>
 
-      <div class="contenedor-tabla" ng-show="pendingPayments.length > 0">
+			<div class="contenedor-tabla" ng-show="pendingPayments.length > 0">
 				<div class="head-contenedor">
 					<h4 class="pull-left">Pendiente</h4>
 					<span class="badge yellow pull-left"></span>
 				</div>
 				<table class="table">
+					<tbody>
+						<tr ng-repeat="payingAccount in pendingPayments">
+							<td>{{getAuthNumber()}}</td>
+							<td>{{payingAccount.name}} <span ng-if="payingAccount.type_i == 1">- {{payingAccount.bank_t}}</span></td>
+							<td ng-if="payingAccount.type_i == 0">{{payingAccount.last_digits_s}}</td>
+							<td ng-if="payingAccount.type_i == 1">{{payingAccount.account_t}}</td>
+							<td>{{payingAccount.amount}}</td>
+							<td>{{payingAccount.date}} {{payingAccount.hour}}</td>
+							<td><a href="javascript:void(0);"><span class="ico-tel-azul"></span></a></td>
+						</tr>
+					</tbody>
 					<thead>
 						<tr>
 							<td>N&uacute;mero de autorizaci&oacute;n</td>
@@ -807,28 +838,32 @@
 							<td>Cuenta Destino</td>
 							<td>Monto</td>
 							<td>Fecha y Hora de Aplicaci&oacute;n</td>
+							<td></td>
 						</tr>
 					</thead>
-          <tr ng-repeat="payingAccount in pendingPayments">
-            <td>{{getAuthNumber()}}</td>
-            <td>{{payingAccount.name}} <span ng-if="payingAccount.type_i == 1">- {{payingAccount.bank_t}}</span></td>
-            <td ng-if="payingAccount.type_i == 0">{{payingAccount.last_digits_s}}</td>
-            <td ng-if="payingAccount.type_i == 1">{{payingAccount.account_t}}</td>
-            <td>{{payingAccount.amount}}</td>
-            <td>{{payingAccount.date}} {{payingAccount.hour}}</td>
-          </tr>
 				</table>
 			</div>
 
-      <div class="contenedor-tabla" ng-show="rejectedPayments.length > 0">
+			<div class="contenedor-tabla" ng-show="rejectedPayments.length > 0">
 				<div class="head-contenedor">
 					<h4 class="pull-left">Rechazada</h4>
 					<span class="badge red pull-left"></span>
 					<button class="btn btn-table pull-right">
-						<span class="glyphicon glyphicon glyphicon-repeat"></span> Reintentar
+						<span class="ico-reintentar-blanco"></span> Reintentar
 					</button>
 				</div>
 				<table class="table">
+					<tbody>
+						<tr ng-repeat="payingAccount in rejectedPayments">
+							<td>{{getAuthNumber()}}</td>
+							<td>{{payingAccount.name}} <span ng-if="payingAccount.type_i == 1">- {{payingAccount.bank_t}}</span></td>
+							<td ng-if="payingAccount.type_i == 0">{{payingAccount.last_digits_s}}</td>
+							<td ng-if="payingAccount.type_i == 1">{{payingAccount.account_t}}</td>
+							<td>{{payingAccount.amount}}</td>
+							<td>{{payingAccount.date}} {{payingAccount.hour}}</td>
+							<td><a href="javascript:void(0);"><span class="ico-ayuda-azul"></span></a></td>
+						</tr>
+					</tbody>
 					<thead>
 						<tr>
 							<td>N&uacute;mero de autorizaci&oacute;n</td>
@@ -836,20 +871,18 @@
 							<td>Cuenta Destino</td>
 							<td>Monto</td>
 							<td>Fecha y Hora de Aplicaci&oacute;n</td>
+							<td></td>
 						</tr>
 					</thead>
-          <tr ng-repeat="payingAccount in rejectedPayments">
-            <td>{{getAuthNumber()}}</td>
-            <td>{{payingAccount.name}} <span ng-if="payingAccount.type_i == 1">- {{payingAccount.bank_t}}</span></td>
-            <td ng-if="payingAccount.type_i == 0">{{payingAccount.last_digits_s}}</td>
-            <td ng-if="payingAccount.type_i == 1">{{payingAccount.account_t}}</td>
-            <td>{{payingAccount.amount}}</td>
-            <td>{{payingAccount.date}} {{payingAccount.hour}}</td>
-          </tr>
 				</table>
 			</div>
-
-			<button ng-click="paymentApplied=false; dashboard=true" type="submit" class="btn btn-primary pull-right">Ir a principal</button>
+			<div class="clear-fix">
+				<p class="totales pull-right">Total pagado: <span>$0.00</span></p>
+			</div>
+			<div class="clear-fix area-botones">
+				<button type="button" class="btn btn-primary pull-right">Hacer otros pagos</button>
+				<a ng-click="paymentApplied=false; dashboard=true" href="javascript:void(0);" class="regresar pull-right">Regresar</a>
+			</div>
 		</div>
 	</div>
 </div>
