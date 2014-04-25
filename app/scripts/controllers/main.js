@@ -31,6 +31,12 @@ angular.module('bnePaymentsFrontApp')
 
       $http.get($scope.url + 'api/ownaccounts?query=' + query + '&rows=' + $scope.rows + '&page=' + page).success(function(data, status, headers, config) {
         $scope.numPersonalAccounts = data.numFound;
+
+        if(!$scope.searchPersonalAccounts) {
+          $scope.targetPersonalAccounts = [];
+          return;
+        }
+
         for(var i = 0; i < data.docs.length; i++) {
           $scope.targetPersonalAccounts.push(data.docs[i]);
         }
@@ -59,6 +65,11 @@ angular.module('bnePaymentsFrontApp')
 
       $http.get($scope.url + 'api/otheraccounts?query=' + query + '&rows=' + $scope.rows).success(function(data, status, headers, config) {
         $scope.numThirdAccounts = data.numFound;
+
+        if(!$scope.searchThirdAccounts) {
+          $scope.targetThirdAccounts = [];
+          return;
+        }
 
         for(var i = 0; i < data.docs.length; i++) {
           $scope.targetThirdAccounts.push(data.docs[i]);
