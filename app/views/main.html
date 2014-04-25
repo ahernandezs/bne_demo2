@@ -700,9 +700,7 @@
 										placeholder="30/04/2014"/>
 								</div>
 								<div class="col-md-6">
-									<select class="form-control">
-										<option>Ahora</option>
-										<option>8:00</option>
+									<select class="form-control" ng-model="payingAccount.hourSelection" ng-options="c.name for c in hoursCombo">
 									</select>
 									<!-- <input ng-model="payingAccount.hour" type="text" class="form-control pull-left col-md-3" 
 										name="" 
@@ -809,7 +807,8 @@
 							<td ng-if="payingAccount.type_i == 0">{{payingAccount.last_digits_s}}</td>
 							<td ng-if="payingAccount.type_i == 1">{{payingAccount.account_t}}</td>
 							<td>{{payingAccount.amount | currency}}</td>
-							<td>{{payingAccount.date}} {{payingAccount.hour}}</td>
+							<td ng-if="payingAccount.hourSelection.name === 'Ahora'">{{payingAccount.date}} {{getCurrentDate() | date:'HH:mm'}}</td>
+							<td ng-if="payingAccount.hourSelection.name != 'Ahora'">{{payingAccount.date}} {{payingAccount.hourSelection.name}}</td>
 							<td>
 								<span class="botones">
 									<a href="javascript:void(0);"><span class="ico-print-azul"></span></a> /

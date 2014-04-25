@@ -24,6 +24,59 @@ angular.module('bnePaymentsFrontApp')
     $scope.numThirdAccounts = 0;
     $scope.busyThirdAccounts = false;
 
+    $scope.hoursCombo = [
+      {name: 'Ahora'},
+      {name: '0:00'},
+      {name: '0:30'},
+      {name: '1:00'},
+      {name: '1:30'},
+      {name: '2:00'},
+      {name: '2:30'},
+      {name: '3:00'},
+      {name: '3:30'},
+      {name: '4:00'},
+      {name: '4:30'},
+      {name: '5:00'},
+      {name: '5:30'},
+      {name: '6:00'},
+      {name: '6:30'},
+      {name: '7:00'},
+      {name: '7:30'},
+      {name: '8:00'},
+      {name: '8:30'},
+      {name: '9:00'},
+      {name: '9:30'},
+      {name: '10:00'},
+      {name: '10:30'},
+      {name: '11:00'},
+      {name: '11:30'},
+      {name: '12:00'},
+      {name: '12:30'},
+      {name: '13:00'},
+      {name: '13:30'},
+      {name: '14:00'},
+      {name: '14:30'},
+      {name: '15:00'},
+      {name: '15:30'},
+      {name: '16:00'},
+      {name: '16:30'},
+      {name: '17:00'},
+      {name: '17:30'},
+      {name: '18:00'},
+      {name: '18:30'},
+      {name: '19:00'},
+      {name: '19:30'},
+      {name: '20:00'},
+      {name: '20:30'},
+      {name: '21:00'},
+      {name: '21:30'},
+      {name: '22:00'},
+      {name: '22:30'},
+      {name: '23:00'},
+      {name: '23:30'},
+      {name: '24:00'}
+    ];
+
     $scope.url = "http://projects.anzen.com.mx:4567/"
 
     $scope.getTargetPersonalAccounts = function(query, page) {
@@ -155,6 +208,7 @@ angular.module('bnePaymentsFrontApp')
     $scope.selectPersonalAccount = function(account) {
       if(account) {
         if($scope.getPayingAccountIndex(account.id) === -1) {
+          account.hourSelection = $scope.hoursCombo[0];
           $scope.payingAccounts.push(account);
           $scope.dashboard = false;
           $scope.paymentConfirmation = true;
@@ -173,6 +227,7 @@ angular.module('bnePaymentsFrontApp')
     $scope.selectThirdAccount = function(account) {
       if(account) {
         if($scope.getPayingAccountIndex(account.id) === -1) {
+          account.hourSelection = $scope.hoursCombo[0];
           $scope.payingAccounts.push(account);
           $scope.dashboard = false;
           $scope.paymentConfirmation = true;
@@ -269,5 +324,9 @@ angular.module('bnePaymentsFrontApp')
       }
 
       return sum;
+    };
+
+    $scope.getCurrentDate = function () {
+      return Date.now();
     };
   }]);
